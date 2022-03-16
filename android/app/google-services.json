@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "194961987651",
+    "project_id": "idiomism-94093",
+    "storage_bucket": "idiomism-94093.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194961987651:android:c1681462936786fc92dcf6",
+        "android_client_info": {
+          "package_name": "ygn.supportkalay.idiomism"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "194961987651-0sgl7lomup4ddj94bdfeonbell6p6fjp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUWQTBf1ak3RkHrVsuAk11T1iggJq65xQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "194961987651-0sgl7lomup4ddj94bdfeonbell6p6fjp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
