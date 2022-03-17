@@ -28,14 +28,16 @@ class MyApp extends StatelessWidget {
           )..add(LoadIdioms()),
         ),
       ],
-      child: MaterialApp(
-        title: 'Idiomism',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        onGenerateRoute: _appRouter.onGeneratedRoute,
-      ),
+      child: Sizer(builder: (context, orientation, deviceType) {
+        return MaterialApp(
+          title: 'Idiomism',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          onGenerateRoute: _appRouter.onGeneratedRoute,
+        );
+      }),
     );
   }
 }

@@ -97,7 +97,9 @@ class HomeScreen extends StatelessWidget {
                   IconWidget(
                     title: 'Learn',
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/learn');
+                      },
                       icon: Image.asset(
                         'assets/icons/learn.png',
                       ),
