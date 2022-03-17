@@ -1,5 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:idiomism/data/repositories/idiom_repository.dart';
+import 'package:idiomism/logic/blocs/idiom/idiom_bloc.dart';
 import 'package:idiomism/presentation/router/app_router.dart';
 
 void main() async {
@@ -16,13 +19,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Idiomism',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => IdiomBloc(
+            idiomRepository: IdiomRepository(),
+          )..add(LoadIdioms()),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'Idiomism',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        onGenerateRoute: _appRouter.onGeneratedRoute,
       ),
-      onGenerateRoute: _appRouter.onGeneratedRoute,
     );
   }
 }
