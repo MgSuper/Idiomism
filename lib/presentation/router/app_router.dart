@@ -6,7 +6,7 @@ class AppRouter {
     switch (routeSettings.name) {
       case '/':
         return MaterialPageRoute(
-          builder: (_) => LearnScreen(),
+          builder: (_) => HomeScreen(),
         );
         break;
       case '/learn':
