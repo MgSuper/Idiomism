@@ -31,9 +31,8 @@ class LearnScreen extends StatelessWidget {
         ),
         body: BlocBuilder<IdiomBloc, IdiomState>(
           builder: (context, state) {
-            print(state);
             if (state is IdiomLoading) {
-              return Center(
+              return const Center(
                 child: SpinKitDancingSquare(
                   color: Colors.red,
                   size: 50.0,
@@ -52,7 +51,7 @@ class LearnScreen extends StatelessWidget {
                 },
               );
             }
-            return Center(
+            return const Center(
               child: Text('Something went wrong'),
             );
           },
