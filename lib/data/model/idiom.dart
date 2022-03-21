@@ -16,13 +16,6 @@ class Idiom extends Equatable {
     return idiom;
   }
 
-  static Idiom fromJson(Map<String, dynamic> json) {
-    return Idiom(
-        phrase: json['phrase'],
-        meaning: json['meaning'],
-        sentence: json['sentence']);
-  }
-
   @override
   String toString() => 'Phrase <$phrase>';
 
