@@ -13,38 +13,49 @@ class LearnScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final IdiomRepository repository = IdiomRepository();
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Learn'),
-        centerTitle: false,
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Color(0xFF17c3ad), Color(0xFFe1f5fc)],
+        ),
       ),
-      body: BlocBuilder<IdiomBloc, IdiomState>(
-        builder: (context, state) {
-          print(state);
-          if (state is IdiomLoading) {
-            return Center(
-              child: SpinKitDancingSquare(
-                color: Colors.red,
-                size: 50.0,
-              ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          title: const Text('Learn'),
+          centerTitle: false,
+        ),
+        body: BlocBuilder<IdiomBloc, IdiomState>(
+          builder: (context, state) {
+            if (state is IdiomLoading) {
+              return const Center(
+                child: SpinKitDancingSquare(
+                  color: Colors.red,
+                  size: 50.0,
+                ),
+              );
+            }
+            if (state is IdiomLoaded) {
+              return ListView.separated(
+                separatorBuilder: (BuildContext context, int index) =>
+                    const Divider(),
+                itemCount: state.idioms.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(state.idioms[index].phrase),
+                  );
+                },
+              );
+            }
+            return const Center(
+              child: Text('Something went wrong'),
             );
-          }
-          if (state is IdiomLoaded) {
-            return ListView.separated(
-              separatorBuilder: (BuildContext context, int index) =>
-                  const Divider(),
-              itemCount: state.idioms.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(state.idioms[index].phrase),
-                );
-              },
-            );
-          }
-          return Center(
-            child: Text('Something went wrong'),
-          );
-        },
+          },
+        ),
       ),
     );
   }

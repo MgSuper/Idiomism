@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:idiomism/data/repositories/idiom_repository.dart';
 import 'package:idiomism/logic/blocs/idiom/idiom_bloc.dart';
 import 'package:idiomism/presentation/router/app_router.dart';
+import 'package:sizer/sizer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,14 +28,16 @@ class MyApp extends StatelessWidget {
           )..add(LoadIdioms()),
         ),
       ],
-      child: MaterialApp(
-        title: 'Idiomism',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        onGenerateRoute: _appRouter.onGeneratedRoute,
-      ),
+      child: Sizer(builder: (context, orientation, deviceType) {
+        return MaterialApp(
+          title: 'Idiomism',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          onGenerateRoute: _appRouter.onGeneratedRoute,
+        );
+      }),
     );
   }
 }
