@@ -61,6 +61,10 @@ class LearnScreen extends StatelessWidget {
                     itemCount: idioms.length,
                     itemBuilder: (context, index) {
                       return ListTile(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/learn_detail',
+                              arguments: state.idioms[index]);
+                        },
                         title: Text(idioms[index].phrase),
                       );
                     },
