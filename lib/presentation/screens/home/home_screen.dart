@@ -91,51 +91,54 @@ class HomeScreen extends StatelessWidget {
               SizedBox(
                 height: 2.0.h,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  IconWidget(
-                    title: 'Learn',
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/learn');
-                      },
-                      icon: Image.asset(
-                        'assets/icons/learn.png',
+              Padding(
+                padding: EdgeInsets.only(left: 3.0.w),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    IconWidget(
+                      title: 'Learn',
+                      child: IconButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/learn');
+                        },
+                        icon: Image.asset(
+                          'assets/icons/learn.png',
+                        ),
                       ),
+                      color: Colors.white,
+                      delayanimation: 1.5,
                     ),
-                    color: Colors.white,
-                    delayanimation: 1.5,
-                  ),
-                  SizedBox(
-                    width: 4.0.w,
-                  ),
-                  IconWidget(
-                    title: 'Flash Cards',
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: Image.asset(
-                        'assets/icons/flash_cards.png',
+                    SizedBox(
+                      width: 4.0.w,
+                    ),
+                    IconWidget(
+                      title: 'Flash Cards',
+                      child: IconButton(
+                        onPressed: () {},
+                        icon: Image.asset(
+                          'assets/icons/flash_cards.png',
+                        ),
                       ),
+                      color: Colors.white,
+                      delayanimation: 1.7,
                     ),
-                    color: Colors.white,
-                    delayanimation: 1.7,
-                  ),
-                  SizedBox(
-                    width: 4.0.w,
-                  ),
-                  IconWidget(
-                    title: 'Exam',
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: Image.asset(
-                        'assets/icons/exam.png',
+                    SizedBox(
+                      width: 4.0.w,
+                    ),
+                    IconWidget(
+                      title: 'Exam',
+                      child: IconButton(
+                        onPressed: () {},
+                        icon: Image.asset(
+                          'assets/icons/exam.png',
+                        ),
                       ),
+                      color: Colors.white,
+                      delayanimation: 1.9,
                     ),
-                    color: Colors.white,
-                    delayanimation: 1.9,
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),

@@ -25,13 +25,14 @@ class IconWidget extends StatelessWidget {
             FadeAnimation(
               delay: delayanimation,
               child: Container(
-                  width: 20.0.w,
-                  height: 20.0.w,
-                  decoration: BoxDecoration(
-                    color: color,
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  child: child),
+                width: 18.0.w,
+                height: 18.0.w,
+                decoration: BoxDecoration(
+                  color: color,
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                child: child,
+              ),
             ),
           ],
         ),
@@ -42,7 +43,7 @@ class IconWidget extends StatelessWidget {
           delay: delayanimation,
           child: Text(
             title,
-            style: TextStyle(color: Colors.white, fontSize: 12.5.sp),
+            style: TextStyle(color: Colors.white, fontSize: 12.0.sp),
           ),
         ),
       ],
