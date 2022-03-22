@@ -49,11 +49,17 @@ class LearnScreen extends StatelessWidget {
                   Container(
                       margin: const EdgeInsets.fromLTRB(10, 0, 10, 20),
                       child: TypeAhead(
-                          suggestionsCallback: (pattern) => phrases
-                              .where((item) => item
-                                  .toLowerCase()
-                                  .startsWith(pattern.toLowerCase()))
-                              .toList())),
+                        suggestionsCallback: (pattern) => phrases
+                            .where((item) => item
+                                .toLowerCase()
+                                .startsWith(pattern.toLowerCase()))
+                            .toList(),
+                        onSuggestionSelected: (suggestion) {
+                          Idiom idiom = idioms.firstWhere((element) => element.phrase == suggestion);
+                          Navigator.pushNamed(context, '/learn_detail',
+                              arguments: idiom);
+                        },
+                      )),
                   ListView.separated(
                     shrinkWrap: true,
                     separatorBuilder: (BuildContext context, int index) =>
@@ -63,7 +69,7 @@ class LearnScreen extends StatelessWidget {
                       return ListTile(
                         onTap: () {
                           Navigator.pushNamed(context, '/learn_detail',
-                              arguments: state.idioms[index]);
+                              arguments: idioms[index]);
                         },
                         title: Text(idioms[index].phrase),
                       );

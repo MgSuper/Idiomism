@@ -5,9 +5,11 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 class TypeAhead extends StatelessWidget {
   final FutureOr<Iterable<Object?>> Function(String) suggestionsCallback;
+  final Function(Object?) onSuggestionSelected;
   const TypeAhead({
     Key? key,
     required this.suggestionsCallback,
+    required this.onSuggestionSelected
   }) : super(key: key);
 
   @override
@@ -30,7 +32,7 @@ class TypeAhead extends StatelessWidget {
           title: Text(suggestion.toString()),
         );
       },
-      onSuggestionSelected: (suggestion) {},
+      onSuggestionSelected: onSuggestionSelected,
       hideOnEmpty: true,
       hideOnLoading: true,
       hideOnError: true,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:idiomism/data/model/idiom.dart';
-import 'package:flip_card/flip_card.dart';
 import 'package:idiomism/util/constants.dart';
 import 'package:sizer/sizer.dart';
 
