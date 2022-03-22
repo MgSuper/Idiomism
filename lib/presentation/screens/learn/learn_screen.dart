@@ -1,8 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:idiomism/data/model/idiom.dart';
 import 'package:idiomism/data/repositories/idiom_repository.dart';
 import 'package:idiomism/logic/blocs/idiom/idiom_bloc.dart';
 
@@ -47,6 +45,10 @@ class LearnScreen extends StatelessWidget {
                 itemCount: state.idioms.length,
                 itemBuilder: (context, index) {
                   return ListTile(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/learn_detail',
+                          arguments: state.idioms[index]);
+                    },
                     title: Text(state.idioms[index].phrase),
                   );
                 },
