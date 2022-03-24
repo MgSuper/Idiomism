@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
+const maxFailedLoadAttempts = 3;
+
+const snackBar = SnackBar(
+  content: Text('Yay, got a reward !'),
+);
+
 TextStyle detailSubtitle = TextStyle(
   fontSize: 14.0.sp,
   fontWeight: FontWeight.bold,

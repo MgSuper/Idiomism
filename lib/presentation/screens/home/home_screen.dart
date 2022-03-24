@@ -1,11 +1,87 @@
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:idiomism/presentation/animations/animations.dart';
 import 'package:idiomism/presentation/widgets/icon_widget.dart';
+import 'package:idiomism/util/ad_helper.dart';
+import 'package:idiomism/util/constants.dart';
 import 'package:sizer/sizer.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  late BannerAd _bannerAd;
+  bool _isBannerAdReady = false;
+
+  late RewardedAd _rewardedAd;
+  bool _isRewardedAdReady = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _bannerAd = BannerAd(
+      adUnitId: AdHelper.bannerAdUnitId,
+      request: AdRequest(),
+      size: AdSize.banner,
+      listener: BannerAdListener(
+        onAdLoaded: (_) {
+          setState(() {
+            _isBannerAdReady = true;
+          });
+        },
+        onAdFailedToLoad: (ad, err) {
+          print('Failed to load a banner ad: ${err.message}');
+          _isBannerAdReady = false;
+          ad.dispose();
+        },
+      ),
+    );
+    _bannerAd.load();
+    _loadRewardedAd();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _bannerAd.dispose();
+    _rewardedAd.dispose();
+  }
+
+  void _loadRewardedAd() {
+    RewardedAd.load(
+      adUnitId: AdHelper.rewardedAdUnitId,
+      request: AdRequest(),
+      rewardedAdLoadCallback: RewardedAdLoadCallback(
+        onAdLoaded: (ad) {
+          this._rewardedAd = ad;
+
+          ad.fullScreenContentCallback = FullScreenContentCallback(
+            onAdDismissedFullScreenContent: (ad) {
+              setState(() {
+                _isRewardedAdReady = false;
+              });
+              _loadRewardedAd();
+            },
+          );
+
+          setState(() {
+            _isRewardedAdReady = true;
+          });
+        },
+        onAdFailedToLoad: (err) {
+          print('Failed to load a rewarded ad: ${err.message}');
+          setState(() {
+            _isRewardedAdReady = false;
+          });
+        },
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -143,6 +219,36 @@ class HomeScreen extends StatelessWidget {
             ],
           ),
         ),
+        bottomNavigationBar: _isBannerAdReady
+            ? Container(
+                height: 10.0.h,
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Container(
+                    width: _bannerAd.size.width.toDouble(),
+                    height: _bannerAd.size.height.toDouble(),
+                    child: AdWidget(ad: _bannerAd),
+                  ),
+                ),
+              )
+            : null,
+        floatingActionButton: _isRewardedAdReady
+            ? FloatingActionButton.extended(
+                onPressed: () {
+                  _rewardedAd.show(onUserEarnedReward: (ad, reward) {
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  });
+                },
+                label: Text(
+                  'get reward',
+                  style: TextStyle(color: Colors.white),
+                ),
+                icon: Icon(
+                  Icons.add,
+                  color: Colors.amberAccent[400],
+                ),
+              )
+            : null,
       ),
     );
   }
