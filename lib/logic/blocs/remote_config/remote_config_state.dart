@@ -7,7 +7,7 @@ abstract class RemoteConfigState extends Equatable {
   List<Object> get props => [];
 }
 
-class RemoteConfigInitial extends RemoteConfigState {}
+class RemoteConfigLoading extends RemoteConfigState {}
 
 class RemoteConfigLoaded extends RemoteConfigState {
   final int? count;

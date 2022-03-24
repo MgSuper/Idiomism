@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:idiomism/boxes.dart';
+import 'package:idiomism/data/model/ads_click_count.dart';
+import 'package:idiomism/logic/blocs/remote_config/remote_config_bloc.dart';
 import 'package:idiomism/presentation/animations/animations.dart';
 import 'package:idiomism/presentation/widgets/icon_widget.dart';
 import 'package:idiomism/util/ad_helper.dart';
@@ -21,12 +26,16 @@ class _HomeScreenState extends State<HomeScreen> {
   late RewardedAd _rewardedAd;
   bool _isRewardedAdReady = false;
 
+  int? _count;
+  int? _remoteConfigCount;
+
   @override
   void initState() {
     super.initState();
+    _count = _getCount();
     _bannerAd = BannerAd(
       adUnitId: AdHelper.bannerAdUnitId,
-      request: AdRequest(),
+      request: const AdRequest(),
       size: AdSize.banner,
       listener: BannerAdListener(
         onAdLoaded: (_) {
@@ -48,6 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void dispose() {
     super.dispose();
+    Hive.close();
     _bannerAd.dispose();
     _rewardedAd.dispose();
   }
@@ -55,10 +65,10 @@ class _HomeScreenState extends State<HomeScreen> {
   void _loadRewardedAd() {
     RewardedAd.load(
       adUnitId: AdHelper.rewardedAdUnitId,
-      request: AdRequest(),
+      request: const AdRequest(),
       rewardedAdLoadCallback: RewardedAdLoadCallback(
         onAdLoaded: (ad) {
-          this._rewardedAd = ad;
+          _rewardedAd = ad;
 
           ad.fullScreenContentCallback = FullScreenContentCallback(
             onAdDismissedFullScreenContent: (ad) {
@@ -238,8 +248,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   _rewardedAd.show(onUserEarnedReward: (ad, reward) {
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   });
+                  //TODO _updateCount();
                 },
-                label: Text(
+                label: const Text(
                   'get reward',
                   style: TextStyle(color: Colors.white),
                 ),
@@ -252,7 +263,38 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+  _getCount() {
+    final box = Boxes.getClickCount();
+    return box.getAt(0)?.count ?? 0;
+  }
+
+  _updateCount() {
+    DateTime today = _getCurrentDate();
+    final box = Boxes.getClickCount();
+    int boxCount = box.getAt(0)?.count ?? 0;
+    DateTime boxDate = box.getAt(0)?.date ?? today;
+
+    AdsClickCount adsClickCount;
+    if (boxDate == today) {
+      adsClickCount = AdsClickCount()
+        ..count = ++boxCount
+        ..date = boxDate;
+    } else {
+      adsClickCount = AdsClickCount()
+        ..count = 0
+        ..date = today;
+    }
+    box.putAt(0, adsClickCount);
+  }
+
+  _getCurrentDate() {
+    DateTime now = DateTime.now();
+    DateTime today = DateTime(now.year, now.month, now.day);
+    return today;
+  }
 }
+
 
 // class HomeScreen extends StatelessWidget {
 //   const HomeScreen({Key? key}) : super(key: key);
