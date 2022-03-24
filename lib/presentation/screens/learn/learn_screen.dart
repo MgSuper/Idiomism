@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:idiomism/data/model/idiom.dart';
 import 'package:idiomism/data/repositories/idiom_repository.dart';
 import 'package:idiomism/logic/blocs/idiom/idiom_bloc.dart';
