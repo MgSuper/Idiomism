@@ -1,13 +1,73 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:idiomism/data/model/idiom.dart';
 import 'package:idiomism/data/repositories/idiom_repository.dart';
 import 'package:idiomism/logic/blocs/idiom/idiom_bloc.dart';
 import 'package:idiomism/presentation/widgets/search_widget.dart';
+import 'package:idiomism/util/ad_helper.dart';
+import 'package:idiomism/util/constants.dart';
 
-class LearnScreen extends StatelessWidget {
+class LearnScreen extends StatefulWidget {
   const LearnScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LearnScreen> createState() => _LearnScreenState();
+}
+
+class _LearnScreenState extends State<LearnScreen> {
+  InterstitialAd? _interstitialAd;
+  int _interstitialLoadAttempts = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadInterstitialAd();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _interstitialAd?.dispose();
+  }
+
+  void _loadInterstitialAd() {
+    InterstitialAd.load(
+      adUnitId: AdHelper.interstitialAdUnitId,
+      request: AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (InterstitialAd ad) {
+          _interstitialAd = ad;
+          _interstitialLoadAttempts = 0;
+        },
+        onAdFailedToLoad: (LoadAdError err) {
+          print('Failed to load an interstitial ad: ${err.message}');
+          _interstitialLoadAttempts += 1;
+          _interstitialAd = null;
+          if (_interstitialLoadAttempts >= maxFailedLoadAttempts) {
+            _loadInterstitialAd();
+          }
+        },
+      ),
+    );
+  }
+
+  void _showInterstitialAd() {
+    if (_interstitialAd != null) {
+      _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+        onAdDismissedFullScreenContent: (InterstitialAd ad) {
+          ad.dispose();
+          _loadInterstitialAd();
+        },
+        onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
+          ad.dispose();
+          _loadInterstitialAd();
+        },
+      );
+      _interstitialAd!.show();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +114,9 @@ class LearnScreen extends StatelessWidget {
                                 .startsWith(pattern.toLowerCase()))
                             .toList(),
                         onSuggestionSelected: (suggestion) {
-                          Idiom idiom = idioms.firstWhere((element) => element.phrase == suggestion);
+                          Idiom idiom = idioms.firstWhere(
+                              (element) => element.phrase == suggestion);
+                          _showInterstitialAd();
                           Navigator.pushNamed(context, '/learn_detail',
                               arguments: idiom);
                         },
@@ -67,6 +129,7 @@ class LearnScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return ListTile(
                         onTap: () {
+                          _showInterstitialAd();
                           Navigator.pushNamed(context, '/learn_detail',
                               arguments: idioms[index]);
                         },
