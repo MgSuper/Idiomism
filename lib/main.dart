@@ -20,7 +20,6 @@ Future<void> main() async {
   Hive.registerAdapter(AdsClickCountAdapter());
   await Hive.openBox<AdsClickCount>('adsclickcount');
   FirebaseRemoteConfig remoteConfig = await RemoteConfiguration.initConfig();
-  remoteConfig.fetchAndActivate();
 
   runApp(MyApp(remoteConfig: remoteConfig));
 }

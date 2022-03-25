@@ -8,5 +8,5 @@ class AdsClickCount extends HiveObject {
   late int count;
 
   @HiveField(1)
-  late DateTime date;
+  DateTime? date;
 }

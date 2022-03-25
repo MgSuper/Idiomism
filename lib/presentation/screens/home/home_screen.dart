@@ -57,7 +57,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     try {
       _count = _getCount();
@@ -289,7 +288,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     });
                   },
                   label: const Text(
-                    'get reward',
+                    'Learn',
                     style: TextStyle(color: Colors.white),
                   ),
                   icon: Icon(

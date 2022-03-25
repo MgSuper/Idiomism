@@ -17,6 +17,7 @@ class RemoteConfigBloc extends Bloc<RemoteConfigEvent, RemoteConfigState> {
 
   // Function Implementation
   void _onLoadConfig(event, Emitter<RemoteConfigState> emit) {
+    _remoteConfig.fetchAndActivate();
     int count = _remoteConfig.getInt('count');
     print('hello 2 ' + count.toString());
     emit(RemoteConfigLoaded(count));
