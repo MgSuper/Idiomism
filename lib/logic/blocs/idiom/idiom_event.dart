@@ -9,9 +9,9 @@ abstract class IdiomEvent extends Equatable {
 
 class LoadIdioms extends IdiomEvent {}
 
-class UpdateIdioms extends IdiomEvent {
+class IdiomsLoaded extends IdiomEvent {
   final List<Idiom> idioms;
-  UpdateIdioms(
+  IdiomsLoaded(
     this.idioms,
   );
   @override
