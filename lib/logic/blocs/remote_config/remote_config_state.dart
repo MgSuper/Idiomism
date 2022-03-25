@@ -10,6 +10,9 @@ abstract class RemoteConfigState extends Equatable {
 class RemoteConfigLoading extends RemoteConfigState {}
 
 class RemoteConfigLoaded extends RemoteConfigState {
-  final int? count;
-  const RemoteConfigLoaded({this.count});
+  final int count;
+  RemoteConfigLoaded(this.count);
+
+  @override
+  List<Object> get props => [count];
 }

@@ -26,13 +26,14 @@ class _HomeScreenState extends State<HomeScreen> {
   late RewardedAd _rewardedAd;
   bool _isRewardedAdReady = false;
 
-  int? _count;
-  int? _remoteConfigCount;
+  int _count = 0;
+  int _remoteConfigCount = 0;
+
+  final box = Boxes.getClickCount();
 
   @override
   void initState() {
     super.initState();
-    _count = _getCount();
     _bannerAd = BannerAd(
       adUnitId: AdHelper.bannerAdUnitId,
       request: const AdRequest(),
@@ -52,6 +53,33 @@ class _HomeScreenState extends State<HomeScreen> {
     );
     _bannerAd.load();
     _loadRewardedAd();
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    try {
+      _count = _getCount();
+    } catch (e) {
+      DateTime today = _getCurrentDate();
+      AdsClickCount adsClickCount = AdsClickCount()
+        ..count = 0
+        ..date = today;
+      box.add(adsClickCount);
+      _count = _getCount();
+    }
+
+    final state =
+        BlocProvider.of<RemoteConfigBloc>(context, listen: true).state;
+    print(state);
+    if (state is RemoteConfigLoaded) {
+      setState(() {
+        _remoteConfigCount = state.count;
+        print('hello ' + _count.toString());
+        print('hello 1 ' + _remoteConfigCount.toString());
+      });
+    }
   }
 
   @override
@@ -245,10 +273,15 @@ class _HomeScreenState extends State<HomeScreen> {
         floatingActionButton: _isRewardedAdReady
             ? FloatingActionButton.extended(
                 onPressed: () {
-                  _rewardedAd.show(onUserEarnedReward: (ad, reward) {
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  });
-                  //TODO _updateCount();
+                  if (_count <= _remoteConfigCount) {
+                    _rewardedAd.show(onUserEarnedReward: (ad, reward) {
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    });
+                    _updateCount();
+                    setState(() {
+                      _count = _getCount();
+                    });
+                  }
                 },
                 label: const Text(
                   'get reward',
@@ -265,13 +298,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   _getCount() {
-    final box = Boxes.getClickCount();
     return box.getAt(0)?.count ?? 0;
   }
 
   _updateCount() {
     DateTime today = _getCurrentDate();
-    final box = Boxes.getClickCount();
     int boxCount = box.getAt(0)?.count ?? 0;
     DateTime boxDate = box.getAt(0)?.date ?? today;
 

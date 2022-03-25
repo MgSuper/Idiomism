@@ -9,3 +9,9 @@ abstract class RemoteConfigEvent extends Equatable {
 
 class LoadConfig extends RemoteConfigEvent {}
 
+class UpdateConfig extends RemoteConfigEvent {
+  final int count;
+  const UpdateConfig(this.count);
+  @override
+  List<Object> get props => [count];
+}
