@@ -72,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     final state =
         BlocProvider.of<RemoteConfigBloc>(context, listen: true).state;
-    print(state);
+    print('state ${state}');
     if (state is RemoteConfigLoaded) {
       setState(() {
         _remoteConfigCount = state.count;
@@ -270,10 +270,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               )
             : null,
-        floatingActionButton: _isRewardedAdReady
-            ? FloatingActionButton.extended(
-                onPressed: () {
-                  if (_count <= _remoteConfigCount) {
+        floatingActionButton: BlocBuilder<RemoteConfigBloc, RemoteConfigState>(
+          builder: (context, state) {
+            print('state inside ${state}');
+            print('_isRewardedAdReady inside ${_isRewardedAdReady}');
+            print('_count inside ${_count}');
+            if (state is RemoteConfigLoaded && _isRewardedAdReady) {
+              if (_count <= state.count) {
+                print('state.count ${state.count}');
+                return FloatingActionButton.extended(
+                  onPressed: () {
                     _rewardedAd.show(onUserEarnedReward: (ad, reward) {
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     });
@@ -281,18 +287,44 @@ class _HomeScreenState extends State<HomeScreen> {
                     setState(() {
                       _count = _getCount();
                     });
-                  }
-                },
-                label: const Text(
-                  'get reward',
-                  style: TextStyle(color: Colors.white),
-                ),
-                icon: Icon(
-                  Icons.add,
-                  color: Colors.amberAccent[400],
-                ),
-              )
-            : null,
+                  },
+                  label: const Text(
+                    'get reward',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  icon: Icon(
+                    Icons.add,
+                    color: Colors.amberAccent[400],
+                  ),
+                );
+              }
+            }
+            return Container();
+          },
+        ),
+        // _isRewardedAdReady
+        //     ? FloatingActionButton.extended(
+        //         onPressed: () {
+        //           if (_count <= _remoteConfigCount) {
+        //             _rewardedAd.show(onUserEarnedReward: (ad, reward) {
+        //               ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        //             });
+        //             _updateCount();
+        //             setState(() {
+        //               _count = _getCount();
+        //             });
+        //           }
+        //         },
+        //         label: const Text(
+        //           'get reward',
+        //           style: TextStyle(color: Colors.white),
+        //         ),
+        //         icon: Icon(
+        //           Icons.add,
+        //           color: Colors.amberAccent[400],
+        //         ),
+        //       )
+        //     : null,
       ),
     );
   }

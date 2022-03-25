@@ -6,22 +6,23 @@ part 'remote_config_event.dart';
 part 'remote_config_state.dart';
 
 class RemoteConfigBloc extends Bloc<RemoteConfigEvent, RemoteConfigState> {
-  final FirebaseRemoteConfig remoteConfig;
-  RemoteConfigBloc({required this.remoteConfig})
-      : super(RemoteConfigLoading()) {
+  final FirebaseRemoteConfig _remoteConfig;
+  RemoteConfigBloc({required remoteConfig})
+      : _remoteConfig = remoteConfig,
+        super(RemoteConfigLoading()) {
     // Register event handler
     on<LoadConfig>(_onLoadConfig);
-    on<UpdateConfig>(_onUpdateConfig);
+    on<ConfigLoaded>(_onConfigLoaded);
   }
 
   // Function Implementation
   void _onLoadConfig(event, Emitter<RemoteConfigState> emit) {
-    int count = remoteConfig.getInt('count');
+    int count = _remoteConfig.getInt('count');
     print('hello 2 ' + count.toString());
-    UpdateConfig(count);
+    emit(RemoteConfigLoaded(count));
   }
 
-  void _onUpdateConfig(event, Emitter<RemoteConfigState> emit) {
+  void _onConfigLoaded(event, Emitter<RemoteConfigState> emit) {
     emit(RemoteConfigLoaded(event.count));
   }
 }

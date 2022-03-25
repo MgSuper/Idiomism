@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('remoteConfig ${remoteConfig}');
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => RemoteConfigBloc(
-            remoteConfig: remoteConfig!,
+            remoteConfig: remoteConfig,
           )..add(LoadConfig()), // LoadConfig as soon as the app load
         )
       ],
