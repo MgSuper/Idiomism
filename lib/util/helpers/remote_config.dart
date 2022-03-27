@@ -7,8 +7,8 @@ class RemoteConfiguration {
       fetchTimeout: const Duration(
           seconds: 1), // a fetch will wait up to 10 seconds before timing out
       minimumFetchInterval: const Duration(
-          seconds:
-              10), // fetch parameters will be cached for a maximum of 1 hour
+          hours:
+              12), // fetch parameters will be cached for a maximum of 1 hour
     ));
     return _remoteConfig;
   }

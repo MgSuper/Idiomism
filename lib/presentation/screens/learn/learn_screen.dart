@@ -78,7 +78,7 @@ class _LearnScreenState extends State<LearnScreen> {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Color(0xFF17c3ad), Color(0xFFe1f5fc)],
+          colors: [kPrimaryColor, kSecondaryColor],
         ),
       ),
       child: SafeArea(
@@ -124,7 +124,9 @@ class _LearnScreenState extends State<LearnScreen> {
                   ListView.separated(
                     shrinkWrap: true,
                     separatorBuilder: (BuildContext context, int index) =>
-                        const Divider(),
+                        const Divider(
+                      color: kSecondaryColor,
+                    ),
                     itemCount: idioms.length,
                     itemBuilder: (context, index) {
                       return ListTile(
@@ -133,7 +135,10 @@ class _LearnScreenState extends State<LearnScreen> {
                           Navigator.pushNamed(context, '/learn_detail',
                               arguments: idioms[index]);
                         },
-                        title: Text(idioms[index].phrase),
+                        title: Text(
+                          idioms[index].phrase,
+                          style: const TextStyle(color: Colors.white),
+                        ),
                       );
                     },
                   )
