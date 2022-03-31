@@ -1,34 +1,40 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'ads_click_count.dart';
+part of 'flash_card.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class AdsClickCountAdapter extends TypeAdapter<AdsClickCount> {
+class FlashCardAdapter extends TypeAdapter<FlashCard> {
   @override
-  final int typeId = 0;
+  final int typeId = 1;
 
   @override
-  AdsClickCount read(BinaryReader reader) {
+  FlashCard read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return AdsClickCount()
-      ..count = fields[0] as int
-      ..date = fields[1] as DateTime?;
+    return FlashCard()
+      ..idiomID = fields[0] as String
+      ..phrase = fields[1] as String
+      ..meaning = fields[2] as String
+      ..mmMeaning = fields[3] as String;
   }
 
   @override
-  void write(BinaryWriter writer, AdsClickCount obj) {
+  void write(BinaryWriter writer, FlashCard obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(4)
       ..writeByte(0)
-      ..write(obj.count)
+      ..write(obj.idiomID)
       ..writeByte(1)
-      ..write(obj.date);
+      ..write(obj.phrase)
+      ..writeByte(2)
+      ..write(obj.meaning)
+      ..writeByte(3)
+      ..write(obj.mmMeaning);
   }
 
   @override
@@ -37,7 +43,7 @@ class AdsClickCountAdapter extends TypeAdapter<AdsClickCount> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is AdsClickCountAdapter &&
+      other is FlashCardAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

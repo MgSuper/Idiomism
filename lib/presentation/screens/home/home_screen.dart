@@ -72,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void dispose() {
     super.dispose();
-    Hive.close();
+    Hive.box('adsclickcount').close();
     _bannerAd.dispose();
     _rewardedAd.dispose();
   }
@@ -218,7 +218,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       IconWidget(
                         title: 'Flash Cards',
                         child: IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                             Navigator.pushNamed(context, '/train');
+                          },
                           icon: Image.asset(
                             'assets/icons/flash_cards.png',
                             width: 13.w,

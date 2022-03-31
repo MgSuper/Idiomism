@@ -7,15 +7,13 @@ class Idiom extends Equatable {
   final String meaning;
   final String sentence;
   final String mmMeaning;
-  final bool? hasAddedToFlashCard;
 
   const Idiom(
       {required this.id,
       required this.phrase,
       required this.meaning,
       required this.sentence,
-      required this.mmMeaning,
-      this.hasAddedToFlashCard});
+      required this.mmMeaning});
 
   static Idiom fromSnapshot(DocumentSnapshot snap) {
     Idiom idiom = Idiom(

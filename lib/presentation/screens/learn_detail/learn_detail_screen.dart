@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:idiomism/boxes.dart';
+import 'package:idiomism/data/model/flash_card.dart';
 import 'package:idiomism/data/model/idiom.dart';
-import 'package:idiomism/logic/blocs/idiom/idiom_bloc.dart';
-import 'package:idiomism/logic/blocs/remote_config/remote_config_bloc.dart';
 import 'package:idiomism/util/constants.dart';
 import 'package:sizer/sizer.dart';
 
@@ -17,15 +16,17 @@ class LearnDetailScreen extends StatefulWidget {
 class _LearnDetailScreenState extends State<LearnDetailScreen> {
   List<Idiom>? idioms;
 
+  final box = Boxes.getFlashCards();
+
+  bool? isAdded;
+
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final state = BlocProvider.of<IdiomBloc>(context, listen: true).state;
-    if (state is IdiomLoaded) {
-      setState(() {
-        idioms = state.idioms;
-      });
-    }
+  void initState() {
+    super.initState();
+    final list = _checkExistingItem();
+    setState(() {
+      (list.length > 0) ? isAdded = true : isAdded = false;
+    });
   }
 
   @override
@@ -93,21 +94,23 @@ class _LearnDetailScreenState extends State<LearnDetailScreen> {
                 textAlign: TextAlign.start,
               ),
               const Spacer(flex: 1),
-              Container(
-                alignment: Alignment.bottomRight,
-                child: FloatingActionButton.extended(
-                  onPressed: () => {_addToFlashCard()},
-                  backgroundColor: Colors.white,
-                  icon: const Icon(
-                    Icons.add,
-                    color: kPrimaryColor,
-                  ),
-                  label: const Text(
-                    'Add to flash card',
-                    style: TextStyle(color: kPrimaryColor),
-                  ),
-                ),
-              ),
+              (!isAdded!)
+                  ? Container(
+                      alignment: Alignment.bottomRight,
+                      child: FloatingActionButton.extended(
+                        onPressed: () => {_addToFlashCard()},
+                        backgroundColor: Colors.white,
+                        icon: const Icon(
+                          Icons.add,
+                          color: kPrimaryColor,
+                        ),
+                        label: const Text(
+                          'Add to flash card',
+                          style: TextStyle(color: kPrimaryColor),
+                        ),
+                      ),
+                    )
+                  : Container(),
               SizedBox(
                 height: 5.0.h,
               )
@@ -119,6 +122,20 @@ class _LearnDetailScreenState extends State<LearnDetailScreen> {
   }
 
   _addToFlashCard() {
-    
+    final cardItem = FlashCard()
+                    ..idiomID = widget.passData!.id
+                    ..phrase = widget.passData!.phrase
+                    ..meaning = widget.passData!.meaning
+                    ..mmMeaning = widget.passData!.mmMeaning;
+    box.add(cardItem);
+    setState(() {
+      isAdded = true;
+    });
+    ScaffoldMessenger.of(context).showSnackBar(successSnackBar);
+  }
+
+  _checkExistingItem() {
+    return box.values
+        .where((element) => element.idiomID == widget.passData!.id);
   }
 }

@@ -1,26 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:idiomism/data/model/flash_card.dart';
 import 'package:idiomism/data/model/idiom.dart';
 import 'package:idiomism/presentation/screens/screens.dart';
+import 'package:idiomism/presentation/screens/train/train_screen.dart';
+import 'package:idiomism/presentation/screens/train_detail/train_detail_screen.dart';
 
 class AppRouter {
   Route onGeneratedRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
       case '/':
         return MaterialPageRoute(
-          builder: (_) => HomeScreen(),
+          builder: (_) => const HomeScreen(),
         );
-        break;
       case '/learn':
         return MaterialPageRoute(
-          builder: (_) => LearnScreen(),
+          builder: (_) => const LearnScreen(),
         );
-        break;
       case '/learn_detail':
         return MaterialPageRoute(
           builder: (_) =>
               LearnDetailScreen(passData: routeSettings.arguments as Idiom),
         );
-        break;
+      case '/train':
+        return MaterialPageRoute(builder: (_) => const TrainScreen());
+      case TrainDetailScreen.id:
+        return MaterialPageRoute(builder: (_) => TrainDetailScreen(passedData: routeSettings.arguments as FlashCard,));
       default:
         return MaterialPageRoute(
           builder: (_) => ScreenNotFound(),
