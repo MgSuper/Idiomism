@@ -48,7 +48,7 @@ class _TrainDetailScreenState extends State<TrainDetailScreen> {
                 cardKey.currentState!.toggleCard()
               },
               type: 'back', 
-              color: const Color.fromARGB(255, 139, 218, 211)
+              color: const Color.fromARGB(255, 155, 245, 236)
             ),
           )),
     );

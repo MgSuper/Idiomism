@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -6,6 +8,8 @@ import 'package:idiomism/boxes.dart';
 import 'package:idiomism/data/model/ads_click_count.dart';
 import 'package:idiomism/logic/blocs/remote_config/remote_config_bloc.dart';
 import 'package:idiomism/presentation/animations/animations.dart';
+import 'package:idiomism/presentation/widgets/card_stack_widget.dart';
+import 'package:idiomism/presentation/widgets/card_widget.dart';
 import 'package:idiomism/presentation/widgets/icon_widget.dart';
 import 'package:idiomism/util/ad_helper.dart';
 import 'package:idiomism/util/constants.dart';
@@ -29,6 +33,8 @@ class _HomeScreenState extends State<HomeScreen> {
   int _count = 0;
 
   final box = Boxes.getClickCount();
+
+  String imageUrl = "amazing.png";
 
   @override
   void initState() {
@@ -57,6 +63,14 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+
+    precacheImage(const AssetImage("assets/icons/amazing.png"), context);
+    precacheImage(const AssetImage("assets/icons/good_job.png"), context);
+    precacheImage(const AssetImage("assets/icons/doing_great.png"), context);
+    precacheImage(const AssetImage("assets/icons/good.png"), context);
+    precacheImage(const AssetImage("assets/icons/slow_n_steady.png"), context);
+    precacheImage(const AssetImage("assets/icons/you_got_this.png"), context);
+
     try {
       _count = _getCount();
     } catch (e) {
@@ -112,159 +126,66 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Container(
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [kPrimaryColor, kSecondaryColor],
-          ),
-        ),
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [kPrimaryColor, kSecondaryColor],
+            ),
+            color: Colors.white),
         child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
-            title: const Text('Home'),
-          ),
-          body: FadeAnimation(
-            delay: 1.5,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 2.0.w),
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25)),
-                    child: Container(
-                      height: 30.0.h,
-                      width: 100.0.w,
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [
-                            Color(0xFFc5bbf9),
-                            Color(0xFFb9eef5),
-                          ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomCenter,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            blurRadius: 7,
-                            offset: const Offset(0, 3),
-                          )
-                        ],
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            'Efficiency',
-                            style: TextStyle(
-                              color: kTertiaryColor,
-                              fontSize: 18.0.sp,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 2.0.h,
-                          ),
-                          CircularStepProgressIndicator(
-                            totalSteps: 100,
-                            currentStep: 72,
-                            selectedColor: kPrimaryColor,
-                            unselectedColor: Colors.white,
-                            padding: 0,
-                            width: 40.0.w,
-                            height: 20.0.h,
-                            child: const Icon(
-                              Icons.tag_faces,
-                              color: kTertiaryColor,
-                              size: 84,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 2.0.h,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 3.0.w),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      IconWidget(
-                        title: 'Learn',
-                        child: IconButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/learn');
-                          },
-                          icon: Image.asset(
-                            'assets/icons/learn.png',
-                            width: 13.w,
-                            height: 20.h,
-                          ),
-                        ),
-                        color: Colors.white,
-                        delayanimation: 1.5,
-                      ),
-                      SizedBox(
-                        width: 5.0.w,
-                      ),
-                      IconWidget(
-                        title: 'Flash Cards',
-                        child: IconButton(
-                          onPressed: () {
-                             Navigator.pushNamed(context, '/train');
-                          },
-                          icon: Image.asset(
-                            'assets/icons/flash_cards.png',
-                            width: 13.w,
-                            height: 19.h,
-                          ),
-                        ),
-                        color: Colors.white,
-                        delayanimation: 1.7,
-                      ),
-                      SizedBox(
-                        width: 5.0.w,
-                      ),
-                      IconWidget(
-                        title: 'Exam',
-                        child: IconButton(
-                          onPressed: () {},
-                          icon: Image.asset(
-                            'assets/icons/exam.png',
-                            width: 13.w,
-                            height: 20.h,
-                          ),
-                        ),
-                        color: Colors.white,
-                        delayanimation: 1.9,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+            title: const Text(
+              'Home',
+              style: TextStyle(color: Colors.white),
             ),
           ),
-          bottomNavigationBar: _isBannerAdReady
-              ? Container(
-                  height: 10.0.h,
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Container(
-                      width: _bannerAd.size.width.toDouble(),
-                      height: _bannerAd.size.height.toDouble(),
-                      child: AdWidget(ad: _bannerAd),
-                    ),
+          body: SafeArea(
+            child: Column(children: [
+              Stack(
+                children: [
+                  Column(
+                    children: <Widget>[
+                      CardStack(
+                        onCardChanged: (url) {
+                          setState(() {
+                            imageUrl = url;
+                          });
+                        },
+                      )
+                    ],
                   ),
-                )
-              : null,
+                ],
+              ),
+              FadeAnimation(
+                delay: 1.5,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    _cardWidget(
+                      'assets/icons/learn.png',
+                      'Learn',
+                      (){
+                        Navigator.pushNamed(context, '/learn');
+                      }
+                    ),
+                    SizedBox(
+                      width: 5.0.w,
+                    ),
+                    _cardWidget(
+                      'assets/icons/flash_cards.png',
+                      'Flash cards',
+                      (){
+                        Navigator.pushNamed(context, '/train');
+                      }
+                    ),
+                  ],
+                ),
+              )
+            ]),
+          ),
           floatingActionButton:
               BlocBuilder<RemoteConfigBloc, RemoteConfigState>(
             builder: (context, state) {
@@ -319,5 +240,34 @@ class _HomeScreenState extends State<HomeScreen> {
     DateTime now = DateTime.now();
     DateTime today = DateTime(now.year, now.month, now.day);
     return today;
+  }
+
+  Widget _cardWidget(image, text, onTap) {
+    return InkWell(
+        onTap: onTap,
+        child: Container(
+          width: 40.w,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: Colors.grey[200],
+          ),
+          child: Column(
+            children: [
+              Image.asset(
+                image,
+                width: 15.w,
+                height: 15.h,
+              ),
+              Text(
+                text,
+                textAlign: TextAlign.start,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12.sp),
+              ),
+              SizedBox(
+                height: 3.h,
+              )
+            ],
+          ),
+        ));
   }
 }

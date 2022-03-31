@@ -18,6 +18,7 @@ class TypeAhead extends StatelessWidget {
     return TypeAheadField(
       getImmediateSuggestions: true,
       textFieldConfiguration: const TextFieldConfiguration(
+        style: TextStyle(color: Colors.white),
         // autofocus: true,
         decoration: InputDecoration(
           focusedBorder: OutlineInputBorder(

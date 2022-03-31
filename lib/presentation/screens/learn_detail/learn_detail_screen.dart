@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:idiomism/boxes.dart';
 import 'package:idiomism/data/model/flash_card.dart';
 import 'package:idiomism/data/model/idiom.dart';
@@ -20,13 +21,23 @@ class _LearnDetailScreenState extends State<LearnDetailScreen> {
 
   bool? isAdded;
 
+  late FlutterTts flutterTts;
+
   @override
   void initState() {
     super.initState();
     final list = _checkExistingItem();
+    flutterTts = FlutterTts();
     setState(() {
       (list.length > 0) ? isAdded = true : isAdded = false;
     });
+  }
+
+  _speak(text) async {
+    await flutterTts.setSpeechRate(0.0);
+    await flutterTts.setLanguage('en-US');
+    await flutterTts.setVoice({"name": "en-us-x-tpf-local", "locale": "en-US"});
+    await flutterTts.speak(text);
   }
 
   @override
@@ -46,15 +57,25 @@ class _LearnDetailScreenState extends State<LearnDetailScreen> {
           padding: EdgeInsets.symmetric(horizontal: 5.0.w),
           child: Column(
             children: [
-              Text(
-                widget.passData!.phrase,
-                style: TextStyle(
-                  fontSize: 18.0.sp,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                Text(
+                  widget.passData!.phrase,
+                  style: TextStyle(
+                    fontSize: 18.0.sp,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
-              ),
+                IconButton(
+                  icon: const Icon(Icons.keyboard_voice_outlined, color: Colors.white),
+                  onPressed: () {
+                    _speak(widget.passData!.phrase);
+                  },
+                )
+              ]),
               SizedBox(
                 height: 5.0.h,
               ),
@@ -123,10 +144,10 @@ class _LearnDetailScreenState extends State<LearnDetailScreen> {
 
   _addToFlashCard() {
     final cardItem = FlashCard()
-                    ..idiomID = widget.passData!.id
-                    ..phrase = widget.passData!.phrase
-                    ..meaning = widget.passData!.meaning
-                    ..mmMeaning = widget.passData!.mmMeaning;
+      ..idiomID = widget.passData!.id
+      ..phrase = widget.passData!.phrase
+      ..meaning = widget.passData!.meaning
+      ..mmMeaning = widget.passData!.mmMeaning;
     box.add(cardItem);
     setState(() {
       isAdded = true;
