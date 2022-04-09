@@ -228,7 +228,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   _goToQuickLearn() {
-    
     var state = context.read<IdiomBloc>().state;
     if (state is IdiomLoaded) {
       List<Idiom> idioms = state.idioms;

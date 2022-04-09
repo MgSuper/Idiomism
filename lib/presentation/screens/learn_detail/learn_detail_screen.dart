@@ -43,24 +43,19 @@ class _LearnDetailScreenState extends State<LearnDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        // gradient: LinearGradient(
-        //   begin: Alignment.topLeft,
-        //   end: Alignment.bottomRight,
-        //   colors: [kPrimaryColor, kSecondaryColor],
-        // ),
-        color: Colors.white
-      ),
+      decoration: const BoxDecoration(color: Colors.white),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: AppBar(backgroundColor: Colors.transparent, elevation: 0, iconTheme: const IconThemeData(color: kPrimaryColor),),
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          iconTheme: const IconThemeData(color: kPrimaryColor),
+        ),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 5.0.w),
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Text(
                   widget.passData!.phrase,
                   style: TextStyle(
@@ -71,7 +66,8 @@ class _LearnDetailScreenState extends State<LearnDetailScreen> {
                   textAlign: TextAlign.center,
                 ),
                 IconButton(
-                  icon: const Icon(Icons.keyboard_voice_outlined, color: kSecondaryColor),
+                  icon: const Icon(Icons.keyboard_voice_outlined,
+                      color: kSecondaryColor),
                   onPressed: () {
                     _speak(widget.passData!.phrase);
                   },
