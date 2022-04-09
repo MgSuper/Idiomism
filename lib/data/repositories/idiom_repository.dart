@@ -11,8 +11,8 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:idiomism/data/model/idiom.dart';
-import 'package:idiomism/data/repositories/base_idiom_repository.dart';
+import 'package:theidioms/data/model/idiom.dart';
+import 'package:theidioms/data/repositories/base_idiom_repository.dart';
 
 class IdiomRepository extends BaseIdiomRepository {
   final FirebaseFirestore _firestore;
@@ -20,7 +20,7 @@ class IdiomRepository extends BaseIdiomRepository {
       : _firestore = firestore ?? FirebaseFirestore.instance;
   @override
   Stream<List<Idiom>> getAllIdioms() {
-    return _firestore.collection('idioms').snapshots().map((snapshot) {
+    return _firestore.collection('idioms').orderBy('phrase', descending: false).snapshots().map((snapshot) {
       return snapshot.docs.map((doc) => Idiom.fromSnapshot(doc)).toList();
     });
   }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:idiomism/presentation/animations/animations.dart';
+import 'package:theidioms/presentation/animations/animations.dart';
 import 'package:sizer/sizer.dart';
 
 class IconWidget extends StatelessWidget {

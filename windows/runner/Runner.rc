@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "ygn.supportkalay" "\0"
-            VALUE "FileDescription", "idiomism" "\0"
+            VALUE "FileDescription", "theidioms" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "idiomism" "\0"
+            VALUE "InternalName", "theidioms" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2022 ygn.supportkalay. All rights reserved." "\0"
-            VALUE "OriginalFilename", "idiomism.exe" "\0"
-            VALUE "ProductName", "idiomism" "\0"
+            VALUE "OriginalFilename", "theidioms.exe" "\0"
+            VALUE "ProductName", "theidioms" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

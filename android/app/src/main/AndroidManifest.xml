@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ygn.supportkalay.idiomism">
+    package="ygn.supportkalay.theidioms">
    <application
-        android:label="idiomism"
+        android:label="The Idioms"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         >
@@ -33,6 +33,6 @@
             android:value="2" />
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713"/>
+            android:value="ca-app-pub-5174798753408425~6318314960"/>
     </application>
 </manifest>

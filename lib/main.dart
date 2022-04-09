@@ -4,18 +4,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:idiomism/data/model/ads_click_count.dart';
-import 'package:idiomism/data/model/flash_card.dart';
-import 'package:idiomism/data/repositories/idiom_repository.dart';
-import 'package:idiomism/logic/blocs/idiom/idiom_bloc.dart';
-import 'package:idiomism/logic/blocs/remote_config/remote_config_bloc.dart';
-import 'package:idiomism/presentation/router/app_router.dart';
-import 'package:idiomism/util/helpers/remote_config.dart';
+import 'package:theidioms/data/model/ads_click_count.dart';
+import 'package:theidioms/data/model/flash_card.dart';
+import 'package:theidioms/data/repositories/idiom_repository.dart';
+import 'package:theidioms/logic/blocs/idiom/idiom_bloc.dart';
+import 'package:theidioms/logic/blocs/remote_config/remote_config_bloc.dart';
+import 'package:theidioms/presentation/router/app_router.dart';
+import 'package:theidioms/util/helpers/remote_config.dart';
 import 'package:sizer/sizer.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   MobileAds.instance.initialize();
+  await MobileAds.instance.initialize().then((InitializationStatus status) {
+    MobileAds.instance.updateRequestConfiguration(
+      RequestConfiguration(
+          tagForChildDirectedTreatment:
+              TagForChildDirectedTreatment.unspecified,
+          testDeviceIds: <String>["F8530ED7C8BED2E8D745436D152CB7ED"]),
+    );
+  });
   await Firebase.initializeApp();
   await Hive.initFlutter();
   Hive.registerAdapter(AdsClickCountAdapter());
@@ -51,10 +59,11 @@ class MyApp extends StatelessWidget {
       ],
       child: Sizer(builder: (context, orientation, deviceType) {
         return MaterialApp(
-          title: 'Idiomism',
+          title: 'theidioms',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             primarySwatch: Colors.blue,
+            fontFamily: 'Kollektif',
           ),
           onGenerateRoute: _appRouter.onGeneratedRoute,
         );

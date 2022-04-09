@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:idiomism/util/constants.dart';
+import 'package:theidioms/util/constants.dart';
 import 'package:sizer/sizer.dart';
 
 class CardWidget extends StatelessWidget {
@@ -42,12 +41,12 @@ class CardWidget extends StatelessWidget {
                         height: 1.h,
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                        const Icon(Icons.touch_app_outlined),
-                        SizedBox(width: 3.w),
-                        const Text('Tap to see the definition'),
-                      ])
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.touch_app_outlined, color: Colors.white,),
+                            SizedBox(width: 3.w),
+                            const Text('Tap to see the definition', style: TextStyle(color: Colors.white),),
+                          ])
                     ])
               : Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -67,6 +66,50 @@ class CardWidget extends StatelessWidget {
                     ),
                   ],
                 ),
+        ));
+  }
+}
+
+class HomeCardWidget extends StatelessWidget {
+  final String? imageURL;
+  final String? text;
+  final Function()? onTap;
+  final Color? color;
+
+  const HomeCardWidget(
+      {Key? key, this.imageURL, this.text, this.onTap, this.color})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+        onTap: onTap,
+        child: Container(
+          width: 40.w,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: color!,
+          ),
+          child: Column(
+            children: [
+              Image.asset(
+                imageURL!,
+                width: 12.w,
+                height: 12.h,
+              ),
+              Text(
+                text!,
+                textAlign: TextAlign.start,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12.sp,
+                    color: Colors.white),
+              ),
+              SizedBox(
+                height: 3.h,
+              )
+            ],
+          ),
         ));
   }
 }

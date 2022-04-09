@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:idiomism/util/constants.dart';
+import 'package:theidioms/util/constants.dart';
 import 'package:sizer/sizer.dart';
 
 class CardStack extends StatefulWidget {
@@ -13,27 +13,27 @@ class CardStack extends StatefulWidget {
 class _CardStackState extends State<CardStack>
     with SingleTickerProviderStateMixin {
   var cards = [
-    TouristCard(
+    ImageCard(
         index: 0,
         imageUrl: "amazing.png",
         text: 'Never stop learning, because life never stop teaching'),
-    TouristCard(
+    ImageCard(
         index: 1,
         imageUrl: "good_job.png",
         text: 'Learn one new thing everyday'),
-    TouristCard(
+    ImageCard(
         index: 2,
         imageUrl: "doing_great.png",
         text: 'Learning is the eye of the mind'),
-    TouristCard(
+    ImageCard(
         index: 3,
-        imageUrl: "good.png",
-        text: 'The wisest mind has something yet to learn'),
-    TouristCard(
-        index: 4,
         imageUrl: "slow_n_steady.png",
+        text: 'The wisest mind has something yet to learn'),
+    ImageCard(
+        index: 4,
+        imageUrl: "good.png",
         text: 'An investment in knowledge pays the best interest'),
-    TouristCard(
+    ImageCard(
         index: 5,
         imageUrl: "you_got_this.png",
         text: 'It\'s never late to learn anything'),
@@ -94,18 +94,18 @@ class _CardStackState extends State<CardStack>
         }).toList());
   }
 
-  Offset _getStackedCardOffset(TouristCard card) {
+  Offset _getStackedCardOffset(ImageCard card) {
     int diff = card.index! - currentIndex!;
     if (card.index == currentIndex! + 1) {
       return _moveAnim!.value;
     } else if (diff > 0 && diff <= 2) {
-      return Offset(0.03 * diff, 0.02);
+      return Offset(0.03 * diff, 0.01);
     } else {
       return const Offset(0.0, 0.0);
     }
   }
 
-  double _getStackedCardScale(TouristCard card) {
+  double _getStackedCardScale(ImageCard card) {
     int diff = card.index! - currentIndex!;
     if (card.index == currentIndex) {
       return 1.0;
@@ -116,7 +116,7 @@ class _CardStackState extends State<CardStack>
     }
   }
 
-  Offset _getFlickTransformOffset(TouristCard card) {
+  Offset _getFlickTransformOffset(ImageCard card) {
     if (card.index == currentIndex) {
       return _translationAnim!.value;
     }
@@ -129,7 +129,7 @@ class _CardStackState extends State<CardStack>
       controller!.forward().whenComplete(() {
         setState(() {
           controller!.reset();
-          TouristCard removedCard = cards.removeAt(0);
+          ImageCard removedCard = cards.removeAt(0);
           cards.add(removedCard);
           currentIndex = cards[0].index;
           if (widget.onCardChanged != null) {
@@ -141,19 +141,20 @@ class _CardStackState extends State<CardStack>
   }
 }
 
-class TouristCard extends StatelessWidget {
+class ImageCard extends StatelessWidget {
   final int? index;
   final String? imageUrl;
   final String? text;
-  TouristCard({this.index, this.imageUrl, this.text});
+  ImageCard({this.index, this.imageUrl, this.text});
 
   @override
   Widget build(BuildContext context) {
+    precacheImage(AssetImage("assets/icons/$imageUrl"), context);
     return Container(
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
-      margin: const EdgeInsets.fromLTRB(30, 5, 30, 0),
+      margin: const EdgeInsets.fromLTRB(30, 5, 40, 0),
       child: Stack(children: [
-        Column(children: [
+        // Column(children: [
           ClipRRect(
               borderRadius: BorderRadius.circular(20.0),
               child: Image.asset(
@@ -162,22 +163,24 @@ class TouristCard extends StatelessWidget {
               )),
           Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.grey[200],
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
+                ),
+                color: Colors.black.withOpacity(0.5),
               ),
-              margin: const EdgeInsets.only(left: 20, right: 20),
               padding: const EdgeInsets.only(left: 10, right: 10),
-              transform: Matrix4.translationValues(0, -50, 0),
+              transform: Matrix4.translationValues(0, 242, 0),
               height: 100,
               child: Center(
                 child: Text(
                   text!,
                   textAlign: TextAlign.center,
                   style:
-                      TextStyle(fontWeight: FontWeight.bold, fontSize: 12.sp),
+                      TextStyle(fontWeight: FontWeight.bold, fontSize: 12.sp, color: Colors.white),
                 ),
               ))
-        ]),
+        // ]),
       ]),
     );
   }

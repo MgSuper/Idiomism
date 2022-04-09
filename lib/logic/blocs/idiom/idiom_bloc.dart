@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:idiomism/data/model/idiom.dart';
-import 'package:idiomism/data/repositories/idiom_repository.dart';
+import 'package:theidioms/data/model/idiom.dart';
+import 'package:theidioms/data/repositories/idiom_repository.dart';
 
 part 'idiom_event.dart';
 part 'idiom_state.dart';

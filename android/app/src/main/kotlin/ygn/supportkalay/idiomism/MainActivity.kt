@@ -1,4 +1,4 @@
-package ygn.supportkalay.idiomism
+package ygn.supportkalay.theidioms
 
 import io.flutter.embedding.android.FlutterActivity
 

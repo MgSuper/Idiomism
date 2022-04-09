@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:idiomism/util/constants.dart';
+import 'package:theidioms/util/constants.dart';
 
 class TypeAhead extends StatelessWidget {
   final FutureOr<Iterable<Object?>> Function(String) suggestionsCallback;
@@ -18,11 +18,11 @@ class TypeAhead extends StatelessWidget {
     return TypeAheadField(
       getImmediateSuggestions: true,
       textFieldConfiguration: const TextFieldConfiguration(
-        style: TextStyle(color: Colors.white),
+       
         // autofocus: true,
         decoration: InputDecoration(
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white),
+            borderSide: BorderSide(color: kPrimaryColor),
             borderRadius: BorderRadius.all(Radius.circular(20)),
           ),
           border: OutlineInputBorder(

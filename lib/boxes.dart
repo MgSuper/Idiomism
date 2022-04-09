@@ -1,6 +1,6 @@
 import 'package:hive/hive.dart';
-import 'package:idiomism/data/model/ads_click_count.dart';
-import 'package:idiomism/data/model/flash_card.dart';
+import 'package:theidioms/data/model/ads_click_count.dart';
+import 'package:theidioms/data/model/flash_card.dart';
 
 class Boxes {
   static Box<AdsClickCount> getClickCount() =>

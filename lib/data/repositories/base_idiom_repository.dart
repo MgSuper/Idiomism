@@ -1,4 +1,4 @@
-import 'package:idiomism/data/model/idiom.dart';
+import 'package:theidioms/data/model/idiom.dart';
 
 abstract class BaseIdiomRepository {
   Stream<List<Idiom>> getAllIdioms();

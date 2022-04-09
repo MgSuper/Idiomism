@@ -1,4 +1,4 @@
-# idiomism
+# theidioms
 
 A new Flutter project.
 

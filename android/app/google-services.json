@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:194961987651:android:c1681462936786fc92dcf6",
+        "mobilesdk_app_id": "1:194961987651:android:bea615284198cf9492dcf6",
         "android_client_info": {
-          "package_name": "ygn.supportkalay.idiomism"
+          "package_name": "ygn.supportkalay.theidioms"
         }
       },
       "oauth_client": [
@@ -20,7 +20,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDUWQTBf1ak3RkHrVsuAk11T1iggJq65xQ"
+          "current_key": "AIzaSyAiY8Mx2Z5s9rSLbnuk0wdAvjQv4QXKnOo"
         }
       ],
       "services": {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:idiomism/boxes.dart';
-import 'package:idiomism/data/model/flash_card.dart';
-import 'package:idiomism/data/model/idiom.dart';
-import 'package:idiomism/util/constants.dart';
+import 'package:theidioms/boxes.dart';
+import 'package:theidioms/data/model/flash_card.dart';
+import 'package:theidioms/data/model/idiom.dart';
+import 'package:theidioms/util/constants.dart';
 import 'package:sizer/sizer.dart';
 
 class LearnDetailScreen extends StatefulWidget {
@@ -44,15 +44,16 @@ class _LearnDetailScreenState extends State<LearnDetailScreen> {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [kPrimaryColor, kSecondaryColor],
-        ),
+        // gradient: LinearGradient(
+        //   begin: Alignment.topLeft,
+        //   end: Alignment.bottomRight,
+        //   colors: [kPrimaryColor, kSecondaryColor],
+        // ),
+        color: Colors.white
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: AppBar(backgroundColor: Colors.transparent, elevation: 0),
+        appBar: AppBar(backgroundColor: Colors.transparent, elevation: 0, iconTheme: const IconThemeData(color: kPrimaryColor),),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 5.0.w),
           child: Column(
@@ -65,12 +66,12 @@ class _LearnDetailScreenState extends State<LearnDetailScreen> {
                   style: TextStyle(
                     fontSize: 18.0.sp,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: kPrimaryColor,
                   ),
                   textAlign: TextAlign.center,
                 ),
                 IconButton(
-                  icon: const Icon(Icons.keyboard_voice_outlined, color: Colors.white),
+                  icon: const Icon(Icons.keyboard_voice_outlined, color: kSecondaryColor),
                   onPressed: () {
                     _speak(widget.passData!.phrase);
                   },
@@ -84,7 +85,7 @@ class _LearnDetailScreenState extends State<LearnDetailScreen> {
                 style: detailTitle,
               ),
               SizedBox(
-                height: 1.0.h,
+                height: 1.5.h,
               ),
               Text(
                 widget.passData!.meaning,
@@ -107,27 +108,30 @@ class _LearnDetailScreenState extends State<LearnDetailScreen> {
                 style: detailTitle,
               ),
               SizedBox(
-                height: 1.0.h,
+                height: 1.5.h,
               ),
               Text(
                 widget.passData!.sentence,
                 style: detailSubtitle,
-                textAlign: TextAlign.start,
+                textAlign: TextAlign.justify,
               ),
               const Spacer(flex: 1),
               (!isAdded!)
                   ? Container(
                       alignment: Alignment.bottomRight,
-                      child: FloatingActionButton.extended(
-                        onPressed: () => {_addToFlashCard()},
-                        backgroundColor: Colors.white,
-                        icon: const Icon(
-                          Icons.add,
-                          color: kPrimaryColor,
-                        ),
-                        label: const Text(
-                          'Add to flash card',
-                          style: TextStyle(color: kPrimaryColor),
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 20),
+                        child: FloatingActionButton.extended(
+                          onPressed: () => {_addToFlashCard()},
+                          backgroundColor: kSecondaryColor,
+                          icon: const Icon(
+                            Icons.add,
+                            color: Colors.white,
+                          ),
+                          label: const Text(
+                            'Add to flash card',
+                            style: TextStyle(color: Colors.white),
+                          ),
                         ),
                       ),
                     )

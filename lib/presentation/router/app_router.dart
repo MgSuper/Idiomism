@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:idiomism/data/model/flash_card.dart';
-import 'package:idiomism/data/model/idiom.dart';
-import 'package:idiomism/presentation/screens/screens.dart';
-import 'package:idiomism/presentation/screens/train/train_screen.dart';
-import 'package:idiomism/presentation/screens/train_detail/train_detail_screen.dart';
+import 'package:theidioms/data/model/flash_card.dart';
+import 'package:theidioms/data/model/idiom.dart';
+import 'package:theidioms/presentation/screens/screens.dart';
+import 'package:theidioms/presentation/screens/train/train_screen.dart';
+import 'package:theidioms/presentation/screens/train_detail/train_detail_screen.dart';
 
 class AppRouter {
   Route onGeneratedRoute(RouteSettings routeSettings) {

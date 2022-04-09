@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:idiomism/boxes.dart';
-import 'package:idiomism/data/model/flash_card.dart';
-import 'package:idiomism/presentation/screens/train_detail/train_detail_screen.dart';
+import 'package:theidioms/boxes.dart';
+import 'package:theidioms/data/model/flash_card.dart';
+import 'package:theidioms/presentation/screens/train_detail/train_detail_screen.dart';
 import 'package:sizer/sizer.dart';
-import 'package:idiomism/util/constants.dart';
+import 'package:theidioms/util/constants.dart';
 
 class TrainScreen extends StatefulWidget {
   const TrainScreen({Key? key}) : super(key: key);
@@ -37,15 +37,19 @@ class _TrainScreenState extends State<TrainScreen> {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [kPrimaryColor, kSecondaryColor],
-        ),
-      ),
+          // gradient: LinearGradient(
+          //   begin: Alignment.topLeft,
+          //   end: Alignment.bottomRight,
+          //   colors: [kPrimaryColor, kSecondaryColor],
+          // ),
+          color: Colors.white),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: AppBar(backgroundColor: Colors.transparent, elevation: 0),
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          iconTheme: const IconThemeData(color: kPrimaryColor),
+        ),
         body: (flashCards!.isNotEmpty)
             ? GridView.count(
                 padding: const EdgeInsets.all(10),
@@ -57,7 +61,7 @@ class _TrainScreenState extends State<TrainScreen> {
                       (item) => Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: const Color.fromARGB(255, 155, 245, 236),
+                          color: kSecondaryColor,
                         ),
                         margin: const EdgeInsets.all(2),
                         padding: const EdgeInsets.all(10),
@@ -78,6 +82,7 @@ class _TrainScreenState extends State<TrainScreen> {
                                       Text(
                                         item.phrase,
                                         style: TextStyle(
+                                            color: Colors.white,
                                             fontSize: 13.0.sp,
                                             fontWeight: FontWeight.bold),
                                         maxLines: 2,
@@ -94,13 +99,18 @@ class _TrainScreenState extends State<TrainScreen> {
                                 children: [
                                   IconButton(
                                     icon: const Icon(
-                                        Icons.keyboard_voice_outlined),
+                                      Icons.keyboard_voice_outlined,
+                                      color: Colors.white,
+                                    ),
                                     onPressed: () {
                                       _speak(item.phrase);
                                     },
                                   ),
                                   IconButton(
-                                    icon: const Icon(Icons.delete_outlined),
+                                    icon: const Icon(
+                                      Icons.delete_outlined,
+                                      color: Colors.white,
+                                    ),
                                     onPressed: () {
                                       _deleteFlashCard(item);
                                     },
@@ -116,15 +126,13 @@ class _TrainScreenState extends State<TrainScreen> {
                     .toList(),
               )
             : Container(
-              transform: Matrix4.translationValues(0, -50.0, 0),
-              child: Center(
-                child: Text(
-                    'Please add a flash card!',
-                    style: detailSubtitle,
-                    textAlign: TextAlign.center,
-                  )
-              )
-            ),
+                transform: Matrix4.translationValues(0, -50.0, 0),
+                child: Center(
+                    child: Text(
+                  'Please add a flash card!',
+                  style: detailSubtitle,
+                  textAlign: TextAlign.center,
+                ))),
       ),
     );
   }

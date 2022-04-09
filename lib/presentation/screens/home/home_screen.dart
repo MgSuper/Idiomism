@@ -1,20 +1,20 @@
-import 'dart:ui';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:idiomism/boxes.dart';
-import 'package:idiomism/data/model/ads_click_count.dart';
-import 'package:idiomism/logic/blocs/remote_config/remote_config_bloc.dart';
-import 'package:idiomism/presentation/animations/animations.dart';
-import 'package:idiomism/presentation/widgets/card_stack_widget.dart';
-import 'package:idiomism/presentation/widgets/card_widget.dart';
-import 'package:idiomism/presentation/widgets/icon_widget.dart';
-import 'package:idiomism/util/ad_helper.dart';
-import 'package:idiomism/util/constants.dart';
+import 'package:theidioms/boxes.dart';
+import 'package:theidioms/data/model/ads_click_count.dart';
+import 'package:theidioms/data/model/idiom.dart';
+import 'package:theidioms/logic/blocs/idiom/idiom_bloc.dart';
+import 'package:theidioms/logic/blocs/remote_config/remote_config_bloc.dart';
+import 'package:theidioms/presentation/animations/animations.dart';
+import 'package:theidioms/presentation/widgets/card_stack_widget.dart';
+import 'package:theidioms/presentation/widgets/card_widget.dart';
+import 'package:theidioms/util/ad_helper.dart';
+import 'package:theidioms/util/constants.dart';
 import 'package:sizer/sizer.dart';
-import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -24,9 +24,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late BannerAd _bannerAd;
-  bool _isBannerAdReady = false;
-
   late RewardedAd _rewardedAd;
   bool _isRewardedAdReady = false;
 
@@ -39,24 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _bannerAd = BannerAd(
-      adUnitId: AdHelper.bannerAdUnitId,
-      request: const AdRequest(),
-      size: AdSize.banner,
-      listener: BannerAdListener(
-        onAdLoaded: (_) {
-          setState(() {
-            _isBannerAdReady = true;
-          });
-        },
-        onAdFailedToLoad: (ad, err) {
-          print('Failed to load a banner ad: ${err.message}');
-          _isBannerAdReady = false;
-          ad.dispose();
-        },
-      ),
-    );
-    _bannerAd.load();
     _loadRewardedAd();
   }
 
@@ -87,7 +66,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void dispose() {
     super.dispose();
     Hive.box('adsclickcount').close();
-    _bannerAd.dispose();
     _rewardedAd.dispose();
   }
 
@@ -125,13 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [kPrimaryColor, kSecondaryColor],
-            ),
-            color: Colors.white),
+        decoration: const BoxDecoration(color: Colors.white),
         child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
@@ -139,7 +111,8 @@ class _HomeScreenState extends State<HomeScreen> {
             elevation: 0,
             title: const Text(
               'Home',
-              style: TextStyle(color: Colors.white),
+              style:
+                  TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold),
             ),
           ),
           body: SafeArea(
@@ -159,27 +132,32 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               ),
+              SizedBox(
+                height: 5.h,
+              ),
               FadeAnimation(
                 delay: 1.5,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    _cardWidget(
-                      'assets/icons/learn.png',
-                      'Learn',
-                      (){
+                    HomeCardWidget(
+                      imageURL: 'assets/icons/learn.png',
+                      text: 'Learn',
+                      color: kPrimaryColor,
+                      onTap: () {
                         Navigator.pushNamed(context, '/learn');
-                      }
+                      },
                     ),
                     SizedBox(
                       width: 5.0.w,
                     ),
-                    _cardWidget(
-                      'assets/icons/flash_cards.png',
-                      'Flash cards',
-                      (){
+                    HomeCardWidget(
+                      imageURL: 'assets/icons/flash_cards.png',
+                      text: 'Flash cards',
+                      color: kSecondaryColor,
+                      onTap: () {
                         Navigator.pushNamed(context, '/train');
-                      }
+                      },
                     ),
                   ],
                 ),
@@ -189,23 +167,30 @@ class _HomeScreenState extends State<HomeScreen> {
           floatingActionButton:
               BlocBuilder<RemoteConfigBloc, RemoteConfigState>(
             builder: (context, state) {
-              if (state is RemoteConfigLoaded && _isRewardedAdReady) {
+              //TODO if (state is RemoteConfigLoaded && _isRewardedAdReady) {
+              if (state is RemoteConfigLoaded) {
                 if (_count <= state.count) {
-                  return FloatingActionButton.extended(
-                    onPressed: () {
-                      _rewardedAd.show(onUserEarnedReward: (ad, reward) {
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      });
-                      _updateCount();
-                      setState(() {
-                        _count = _getCount();
-                      });
-                    },
-                    label: const Text(
-                      'Quick Learn',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  );
+                  return Padding(
+                      padding: const EdgeInsets.only(bottom: 40),
+                      child: FloatingActionButton.extended(
+                        elevation: 10,
+                        onPressed: () {
+                          //TODO _rewardedAd.show(onUserEarnedReward: (ad, reward) {
+                          //   ScaffoldMessenger.of(context)
+                          //       .showSnackBar(snackBar);
+                          // });
+                          _updateCount();
+                          setState(() {
+                            _count = _getCount();
+                          });
+                          _goToQuickLearn();
+                        },
+                        label: const Text(
+                          'Quick Learn',
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                      ));
                 }
               }
               return Container();
@@ -242,32 +227,15 @@ class _HomeScreenState extends State<HomeScreen> {
     return today;
   }
 
-  Widget _cardWidget(image, text, onTap) {
-    return InkWell(
-        onTap: onTap,
-        child: Container(
-          width: 40.w,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: Colors.grey[200],
-          ),
-          child: Column(
-            children: [
-              Image.asset(
-                image,
-                width: 15.w,
-                height: 15.h,
-              ),
-              Text(
-                text,
-                textAlign: TextAlign.start,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12.sp),
-              ),
-              SizedBox(
-                height: 3.h,
-              )
-            ],
-          ),
-        ));
+  _goToQuickLearn() {
+    
+    var state = context.read<IdiomBloc>().state;
+    if (state is IdiomLoaded) {
+      List<Idiom> idioms = state.idioms;
+      var random = Random();
+      var randomNumber = random.nextInt(idioms.length);
+      Navigator.pushNamed(context, '/learn_detail',
+          arguments: idioms[randomNumber]);
+    }
   }
 }

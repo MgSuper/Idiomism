@@ -3,8 +3,8 @@ import 'package:sizer/sizer.dart';
 
 const maxFailedLoadAttempts = 3;
 
-const kPrimaryColor = Color(0xFF455A64);
-const kSecondaryColor = Color(0xFF90A4AE);
+const kPrimaryColor = Color(0xFF42275a);
+const kSecondaryColor = Color(0xFF734b6d);
 const kTertiaryColor = Color(0xFF263238);
 
 const snackBar = SnackBar(
@@ -17,30 +17,28 @@ const successSnackBar = SnackBar(
 
 TextStyle detailSubtitle = TextStyle(
   fontSize: 12.0.sp,
-  color: Colors.white,
+  color: kPrimaryColor,
 );
 
 TextStyle detailMmSubtitle = TextStyle(
   fontSize: 11.0.sp,
-  color: Colors.white,
+  color: kPrimaryColor,
 );
 
 TextStyle detailTitle = TextStyle(
   fontSize: 15.0.sp,
   fontWeight: FontWeight.bold,
-  color: Colors.white,
+  color: kPrimaryColor,
 );
-
 
 TextStyle cardMmSubtitle = TextStyle(
   fontSize: 11.0.sp,
-  color: Colors.black,
+  color: Colors.white,
   fontWeight: FontWeight.bold,
 );
 
 TextStyle cardTitle = TextStyle(
   fontSize: 15.0.sp,
   fontWeight: FontWeight.bold,
-  color: Colors.black,
+  color: Colors.white,
 );
-
