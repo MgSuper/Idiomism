@@ -23,30 +23,31 @@ class _TrainDetailScreenState extends State<TrainDetailScreen> {
     return Container(
       decoration: const BoxDecoration(color: Colors.white),
       child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
           backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            iconTheme: const IconThemeData(color: kPrimaryColor),
+          elevation: 0,
+          iconTheme: const IconThemeData(color: kPrimaryColor),
+        ),
+        body: Padding(
+          padding: EdgeInsets.only(bottom: 4.0.h),
+          child: FlipCard(
+            key: cardKey,
+            flipOnTouch: false,
+            front: CardWidget(
+                text: widget.passedData!.phrase,
+                onTap: () => {cardKey.currentState!.toggleCard()},
+                type: 'front',
+                color: kSecondaryColor),
+            back: CardWidget(
+                text: widget.passedData!.meaning,
+                mmText: widget.passedData!.mmMeaning,
+                onTap: () => {cardKey.currentState!.toggleCard()},
+                type: 'back',
+                color: kPrimaryColor),
           ),
-          body: Padding(
-            padding: EdgeInsets.only(bottom: 4.0.h),
-            child: FlipCard(
-              key: cardKey,
-              flipOnTouch: false,
-              front: CardWidget(
-                  text: widget.passedData!.phrase,
-                  onTap: () => {cardKey.currentState!.toggleCard()},
-                  type: 'front',
-                  color: kSecondaryColor),
-              back: CardWidget(
-                  text: widget.passedData!.meaning,
-                  mmText: widget.passedData!.mmMeaning,
-                  onTap: () => {cardKey.currentState!.toggleCard()},
-                  type: 'back',
-                  color: kPrimaryColor),
-            ),
-          )),
+        ),
+      ),
     );
   }
 }

@@ -36,13 +36,7 @@ class _TrainScreenState extends State<TrainScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-          // gradient: LinearGradient(
-          //   begin: Alignment.topLeft,
-          //   end: Alignment.bottomRight,
-          //   colors: [kPrimaryColor, kSecondaryColor],
-          // ),
-          color: Colors.white),
+      decoration: const BoxDecoration(color: Colors.white),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
@@ -125,11 +119,13 @@ class _TrainScreenState extends State<TrainScreen> {
             : Container(
                 transform: Matrix4.translationValues(0, -50.0, 0),
                 child: Center(
-                    child: Text(
-                  'Please learn some idioms to train !',
-                  style: detailSubtitle,
-                  textAlign: TextAlign.center,
-                ))),
+                  child: Text(
+                    'Please learn some idioms to train !',
+                    style: detailSubtitle,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
       ),
     );
   }

@@ -89,33 +89,34 @@ class HomeCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-        onTap: onTap,
-        child: Container(
-          width: 35.5.w,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: color!,
-          ),
-          child: Column(
-            children: [
-              Image.asset(
-                imageURL!,
-                width: 12.w,
-                height: 12.h,
-              ),
-              Text(
-                text!,
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12.sp,
-                    color: Colors.white),
-              ),
-              SizedBox(
-                height: 3.h,
-              )
-            ],
-          ),
-        ));
+      onTap: onTap,
+      child: Container(
+        width: 35.5.w,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: color!,
+        ),
+        child: Column(
+          children: [
+            Image.asset(
+              imageURL!,
+              width: 12.w,
+              height: 12.h,
+            ),
+            Text(
+              text!,
+              textAlign: TextAlign.start,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12.sp,
+                  color: Colors.white),
+            ),
+            SizedBox(
+              height: 3.h,
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

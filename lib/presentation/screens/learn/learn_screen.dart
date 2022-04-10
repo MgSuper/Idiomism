@@ -104,39 +104,40 @@ class _LearnScreenState extends State<LearnScreen> {
   @override
   Widget build(BuildContext context) {
     final IdiomRepository repository = IdiomRepository();
-
     return Container(
       decoration: const BoxDecoration(color: Colors.white),
       child: SafeArea(
-          child: Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: AppBar(
+        child: Scaffold(
           backgroundColor: Colors.transparent,
-          elevation: 0,
-          title: const Text(
-            'Learn',
-            style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold),
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            title: const Text(
+              'Learn',
+              style:
+                  TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold),
+            ),
+            centerTitle: false,
+            iconTheme: const IconThemeData(color: kPrimaryColor),
           ),
-          centerTitle: false,
-          iconTheme: const IconThemeData(color: kPrimaryColor),
-        ),
-        body: BlocBuilder<IdiomBloc, IdiomState>(builder: (context, state) {
-          if (state is IdiomLoading) {
-            return const Center(
-              child: SpinKitDancingSquare(
-                color: Colors.red,
-                size: 50.0,
-              ),
-            );
-          }
-          if (state is IdiomLoaded) {
-            List<Idiom> idioms = state.idioms;
-            List<String> phrases = getPhrases(idioms);
-            return Container(
+          body: BlocBuilder<IdiomBloc, IdiomState>(builder: (context, state) {
+            if (state is IdiomLoading) {
+              return const Center(
+                child: SpinKitDancingSquare(
+                  color: Colors.red,
+                  size: 50.0,
+                ),
+              );
+            }
+            if (state is IdiomLoaded) {
+              List<Idiom> idioms = state.idioms;
+              List<String> phrases = getPhrases(idioms);
+              return Container(
                 margin: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                child: Column(children: [
-                  Container(
-                      margin: const EdgeInsets.fromLTRB(10, 0, 10, 20),
+                child: Column(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.fromLTRB(10, 0, 10, 10),
                       child: TypeAhead(
                         suggestionsCallback: (pattern) => phrases
                             .where((item) => item
@@ -147,43 +148,52 @@ class _LearnScreenState extends State<LearnScreen> {
                           Idiom idiom = idioms.firstWhere(
                               (element) => element.phrase == suggestion);
                           // _showInterstitialAd();
-                          Navigator.pushNamed(context, '/learn_detail',
-                              arguments: idiom);
+                          Navigator.pushNamed(
+                            context,
+                            '/learn_detail',
+                            arguments: idiom,
+                          );
                         },
-                      )),
-                  Expanded(
-                      child: SingleChildScrollView(
-                          child: ListView.separated(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    separatorBuilder: (BuildContext context, int index) =>
-                        const Divider(
-                      color: Colors.grey,
+                      ),
                     ),
-                    itemCount: idioms.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        onTap: () {
-                          _showInterstitialAd();
-                          Navigator.pushNamed(context, '/learn_detail',
-                              arguments: idioms[index]);
-                        },
-                        title: Text(
-                          idioms[index].phrase,
-                          style: const TextStyle(
-                              color: kPrimaryColor,
-                              fontWeight: FontWeight.bold),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: ListView.separated(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          separatorBuilder: (BuildContext context, int index) =>
+                              const Divider(
+                            color: Colors.grey,
+                          ),
+                          itemCount: idioms.length,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              onTap: () {
+                                _showInterstitialAd();
+                                Navigator.pushNamed(context, '/learn_detail',
+                                    arguments: idioms[index]);
+                              },
+                              title: Text(
+                                idioms[index].phrase,
+                                style: const TextStyle(
+                                    color: kPrimaryColor,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            );
+                          },
                         ),
-                      );
-                    },
-                  )))
-                ]));
-          }
-          return const Center(
-            child: Text('Something went wrong'),
-          );
-        }),
-      )),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }
+            return const Center(
+              child: Text('Something went wrong'),
+            );
+          }),
+        ),
+      ),
     );
   }
 

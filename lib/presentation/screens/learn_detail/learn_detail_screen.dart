@@ -55,24 +55,27 @@ class _LearnDetailScreenState extends State<LearnDetailScreen> {
           padding: EdgeInsets.symmetric(horizontal: 5.0.w),
           child: Column(
             children: [
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Text(
-                  widget.passData!.phrase,
-                  style: TextStyle(
-                    fontSize: 18.0.sp,
-                    fontWeight: FontWeight.bold,
-                    color: kPrimaryColor,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    widget.passData!.phrase,
+                    style: TextStyle(
+                      fontSize: 18.0.sp,
+                      fontWeight: FontWeight.bold,
+                      color: kPrimaryColor,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
-                ),
-                IconButton(
-                  icon: const Icon(Icons.keyboard_voice_outlined,
-                      color: kSecondaryColor),
-                  onPressed: () {
-                    _speak(widget.passData!.phrase);
-                  },
-                )
-              ]),
+                  IconButton(
+                    icon: const Icon(Icons.keyboard_voice_outlined,
+                        color: kSecondaryColor),
+                    onPressed: () {
+                      _speak(widget.passData!.phrase);
+                    },
+                  ),
+                ],
+              ),
               SizedBox(
                 height: 5.0.h,
               ),

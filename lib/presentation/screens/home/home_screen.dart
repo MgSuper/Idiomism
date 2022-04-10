@@ -192,29 +192,27 @@ class _HomeScreenState extends State<HomeScreen> {
               BlocBuilder<RemoteConfigBloc, RemoteConfigState>(
             builder: (context, state) {
               if (state is RemoteConfigLoaded && _isRewardedAdReady) {
-                // if (state is RemoteConfigLoaded) {
                 if (_count <= state.count) {
                   return Padding(
-                      padding: const EdgeInsets.only(bottom: 40),
-                      child: FloatingActionButton.extended(
-                        elevation: 10,
-                        onPressed: () {
-                          _rewardedAd.show(onUserEarnedReward: (ad, reward) {
-                            // ScaffoldMessenger.of(context)
-                            //     .showSnackBar(snackBar);
-                            _updateCount();
-                            setState(() {
-                              _count = _getCount();
-                            });
-                            _goToQuickLearn();
+                    padding: const EdgeInsets.only(bottom: 40),
+                    child: FloatingActionButton.extended(
+                      elevation: 10,
+                      onPressed: () {
+                        _rewardedAd.show(onUserEarnedReward: (ad, reward) {
+                          _updateCount();
+                          setState(() {
+                            _count = _getCount();
                           });
-                        },
-                        label: const Text(
-                          'Quick Learn',
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
-                        ),
-                      ));
+                          _goToQuickLearn();
+                        });
+                      },
+                      label: const Text(
+                        'Quick Learn',
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  );
                 }
               }
               return Container();
