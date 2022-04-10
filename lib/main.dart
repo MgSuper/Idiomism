@@ -22,7 +22,10 @@ Future<void> main() async {
       RequestConfiguration(
           tagForChildDirectedTreatment:
               TagForChildDirectedTreatment.unspecified,
-          testDeviceIds: <String>['F8530ED7C8BED2E8D745436D152CB7ED']),
+          testDeviceIds: <String>[
+            'F8530ED7C8BED2E8D745436D152CB7ED',
+            'F24CA548F6A78A6AC67B649EC3CAEC2A'
+          ]),
     );
   });
   await Firebase.initializeApp();

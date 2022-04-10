@@ -221,7 +221,14 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   _getCount() {
-    return box.getAt(0)?.count ?? 0;
+    DateTime today = _getCurrentDate();
+    DateTime boxDate = box.getAt(0)?.date ?? today;
+
+    if (boxDate != today) {
+      return 0;
+    } else {
+      return box.getAt(0)?.count ?? 0;
+    }
   }
 
   _updateCount() {
@@ -236,7 +243,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ..date = boxDate;
     } else {
       adsClickCount = AdsClickCount()
-        ..count = 0
+        ..count = 1
         ..date = today;
     }
     box.putAt(0, adsClickCount);

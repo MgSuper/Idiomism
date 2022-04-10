@@ -202,7 +202,14 @@ class _LearnScreenState extends State<LearnScreen> {
   }
 
   _getCount() {
-    return box.getAt(0)?.count ?? 0;
+    DateTime today = _getCurrentDate();
+    DateTime boxDate = box.getAt(0)?.date ?? today;
+
+    if (boxDate != today) {
+      return 0;
+    } else {
+      return box.getAt(0)?.count ?? 0;
+    }
   }
 
   _updateCount() {
@@ -217,7 +224,7 @@ class _LearnScreenState extends State<LearnScreen> {
         ..date = boxDate;
     } else {
       adsClickCount = InterstitialClickCount()
-        ..count = 0
+        ..count = 1
         ..date = today;
     }
     box.putAt(0, adsClickCount);
