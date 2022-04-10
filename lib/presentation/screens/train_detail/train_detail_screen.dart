@@ -1,5 +1,6 @@
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 import 'package:theidioms/data/model/flash_card.dart';
 import 'package:theidioms/presentation/widgets/card_widget.dart';
 import 'package:theidioms/util/constants.dart';
@@ -20,34 +21,35 @@ class _TrainDetailScreenState extends State<TrainDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-          // gradient: LinearGradient(
-          //   begin: Alignment.topLeft,
-          //   end: Alignment.bottomRight,
-          //   colors: [kPrimaryColor, kSecondaryColor],
-          // ),
-          color: Colors.white),
+      decoration: const BoxDecoration(color: Colors.white),
       child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
             iconTheme: const IconThemeData(color: kPrimaryColor),
+            actions: [
+              TextButton(onPressed: () {}, child: Text('Back')),
+              TextButton(onPressed: () {}, child: Text('Next')),
+            ],
           ),
-          body: FlipCard(
-            key: cardKey,
-            flipOnTouch: false,
-            front: CardWidget(
-                text: widget.passedData!.phrase,
-                onTap: () => {cardKey.currentState!.toggleCard()},
-                type: 'front',
-                color: kSecondaryColor),
-            back: CardWidget(
-                text: widget.passedData!.meaning,
-                mmText: widget.passedData!.mmMeaning,
-                onTap: () => {cardKey.currentState!.toggleCard()},
-                type: 'back',
-                color: kPrimaryColor),
+          body: Padding(
+            padding: EdgeInsets.only(top: 5.0.h),
+            child: FlipCard(
+              key: cardKey,
+              flipOnTouch: false,
+              front: CardWidget(
+                  text: widget.passedData!.phrase,
+                  onTap: () => {cardKey.currentState!.toggleCard()},
+                  type: 'front',
+                  color: kSecondaryColor),
+              back: CardWidget(
+                  text: widget.passedData!.meaning,
+                  mmText: widget.passedData!.mmMeaning,
+                  onTap: () => {cardKey.currentState!.toggleCard()},
+                  type: 'back',
+                  color: kPrimaryColor),
+            ),
           )),
     );
   }

@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -31,7 +33,24 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final box = Boxes.getClickCount();
 
-  String imageUrl = "amazing.png";
+  String imageUrl = 'amazing.png';
+
+  var carousalCards = [
+    'amazing.png',
+    'good_job.png',
+    'doing_great.png',
+    'slow_n_steady.png',
+    'good.png',
+    'you_got_this.png',
+  ];
+  List carousalTexts = [
+    'Never stop learning, because life never stop teaching',
+    'Learn one new thing everyday',
+    'Learning is the eye of the mind',
+    'The wisest mind has something yet to learn',
+    'An investment in knowledge pays the best interest',
+    'It\'s never late to learn anything'
+  ];
 
   @override
   void initState() {
@@ -43,12 +62,12 @@ class _HomeScreenState extends State<HomeScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    precacheImage(const AssetImage("assets/icons/amazing.png"), context);
-    precacheImage(const AssetImage("assets/icons/good_job.png"), context);
-    precacheImage(const AssetImage("assets/icons/doing_great.png"), context);
-    precacheImage(const AssetImage("assets/icons/good.png"), context);
-    precacheImage(const AssetImage("assets/icons/slow_n_steady.png"), context);
-    precacheImage(const AssetImage("assets/icons/you_got_this.png"), context);
+    precacheImage(const AssetImage('assets/icons/amazing.png'), context);
+    precacheImage(const AssetImage('assets/icons/good_job.png'), context);
+    precacheImage(const AssetImage('assets/icons/doing_great.png'), context);
+    precacheImage(const AssetImage('assets/icons/good.png'), context);
+    precacheImage(const AssetImage('assets/icons/slow_n_steady.png'), context);
+    precacheImage(const AssetImage('assets/icons/you_got_this.png'), context);
 
     try {
       _count = _getCount();
@@ -119,16 +138,21 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(children: [
               Stack(
                 children: [
-                  Column(
-                    children: <Widget>[
-                      CardStack(
-                        onCardChanged: (url) {
-                          setState(() {
-                            imageUrl = url;
-                          });
-                        },
-                      )
-                    ],
+                  CarouselSlider.builder(
+                    itemCount: carousalCards.length,
+                    options: CarouselOptions(
+                      aspectRatio: 1.2,
+                      height: 300,
+                      autoPlay: true,
+                      autoPlayAnimationDuration: Duration(seconds: 2),
+                      enlargeCenterPage: true,
+                      enlargeStrategy: CenterPageEnlargeStrategy.height,
+                    ),
+                    itemBuilder: (context, index, realIndex) {
+                      String img = carousalCards[index];
+                      String text = carousalTexts[index];
+                      return buildCarousalImage(img, text, index);
+                    },
                   ),
                 ],
               ),
@@ -237,4 +261,29 @@ class _HomeScreenState extends State<HomeScreen> {
           arguments: idioms[randomNumber]);
     }
   }
+
+  Widget buildCarousalImage(String img, String text, int index) => Container(
+        margin: EdgeInsets.all(8.0),
+        alignment: Alignment.bottomCenter,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/icons/$img'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            color: Colors.black45,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                '$text',
+                style: TextStyle(color: Colors.white, fontSize: 14.0.sp),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        ),
+      );
 }

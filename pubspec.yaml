@@ -50,6 +50,8 @@ dependencies:
   sizer: ^2.0.15
   step_progress_indicator: ^1.0.2
   supercharged: ^2.1.1
+  carousel_slider: ^4.0.0
+  cached_network_image: ^3.2.0
 
 dev_dependencies:
   hive_generator: ^1.1.2
