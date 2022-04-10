@@ -6,6 +6,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:theidioms/data/model/ads_click_count.dart';
 import 'package:theidioms/data/model/flash_card.dart';
+import 'package:theidioms/data/model/interstitial_click_count.dart';
 import 'package:theidioms/data/repositories/idiom_repository.dart';
 import 'package:theidioms/logic/blocs/idiom/idiom_bloc.dart';
 import 'package:theidioms/logic/blocs/remote_config/remote_config_bloc.dart';
@@ -28,8 +29,10 @@ Future<void> main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(AdsClickCountAdapter());
   Hive.registerAdapter(FlashCardAdapter());
+  Hive.registerAdapter(InterstitialClickCountAdapter());
   await Hive.openBox<AdsClickCount>('adsclickcount');
   await Hive.openBox<FlashCard>('flashcards');
+  await Hive.openBox<InterstitialClickCount>('interstitialCount');
   FirebaseRemoteConfig remoteConfig = await RemoteConfiguration.initConfig();
 
   runApp(MyApp(remoteConfig: remoteConfig));

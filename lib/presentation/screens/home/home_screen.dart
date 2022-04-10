@@ -191,23 +191,23 @@ class _HomeScreenState extends State<HomeScreen> {
           floatingActionButton:
               BlocBuilder<RemoteConfigBloc, RemoteConfigState>(
             builder: (context, state) {
-              //TODO if (state is RemoteConfigLoaded && _isRewardedAdReady) {
-              if (state is RemoteConfigLoaded) {
+              if (state is RemoteConfigLoaded && _isRewardedAdReady) {
+                // if (state is RemoteConfigLoaded) {
                 if (_count <= state.count) {
                   return Padding(
                       padding: const EdgeInsets.only(bottom: 40),
                       child: FloatingActionButton.extended(
                         elevation: 10,
                         onPressed: () {
-                          //TODO _rewardedAd.show(onUserEarnedReward: (ad, reward) {
-                          //   ScaffoldMessenger.of(context)
-                          //       .showSnackBar(snackBar);
-                          // });
-                          _updateCount();
-                          setState(() {
-                            _count = _getCount();
+                          _rewardedAd.show(onUserEarnedReward: (ad, reward) {
+                            // ScaffoldMessenger.of(context)
+                            //     .showSnackBar(snackBar);
+                            _updateCount();
+                            setState(() {
+                              _count = _getCount();
+                            });
+                            _goToQuickLearn();
                           });
-                          _goToQuickLearn();
                         },
                         label: const Text(
                           'Quick Learn',

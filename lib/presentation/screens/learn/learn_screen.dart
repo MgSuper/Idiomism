@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-// import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:theidioms/boxes.dart';
 import 'package:theidioms/data/model/idiom.dart';
+import 'package:theidioms/data/model/interstitial_click_count.dart';
 import 'package:theidioms/data/repositories/idiom_repository.dart';
 import 'package:theidioms/logic/blocs/idiom/idiom_bloc.dart';
+import 'package:theidioms/logic/blocs/remote_config/remote_config_bloc.dart';
 import 'package:theidioms/presentation/widgets/search_widget.dart';
-// import 'package:theidioms/util/ad_helper.dart';
+import 'package:theidioms/util/ad_helper.dart';
 import 'package:theidioms/util/constants.dart';
 
 class LearnScreen extends StatefulWidget {
@@ -17,70 +20,93 @@ class LearnScreen extends StatefulWidget {
 }
 
 class _LearnScreenState extends State<LearnScreen> {
-  // InterstitialAd? _interstitialAd;
-  // int _interstitialLoadAttempts = 0;
+  InterstitialAd? _interstitialAd;
+  int _interstitialLoadAttempts = 0;
+
+  int _count = 0;
+
+  int _configCount = 0;
+
+  final box = Boxes.getInterstitialCount();
 
   @override
   void initState() {
     super.initState();
-    // _loadInterstitialAd();
+    _loadInterstitialAd();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    var state = context.read<RemoteConfigBloc>().state;
+    if (state is RemoteConfigLoaded) {
+      _configCount = state.count;
+    }
+    try {
+      _count = _getCount();
+    } catch (e) {
+      DateTime today = _getCurrentDate();
+      InterstitialClickCount adsClickCount = InterstitialClickCount()
+        ..count = 0
+        ..date = today;
+      box.add(adsClickCount);
+      _count = _getCount();
+    }
   }
 
   @override
   void dispose() {
     super.dispose();
-    // _interstitialAd?.dispose();
+    _interstitialAd?.dispose();
   }
 
-  // void _loadInterstitialAd() {
-  //   InterstitialAd.load(
-  //     adUnitId: AdHelper.interstitialAdUnitId,
-  //     request: AdRequest(),
-  //     adLoadCallback: InterstitialAdLoadCallback(
-  //       onAdLoaded: (InterstitialAd ad) {
-  //         _interstitialAd = ad;
-  //         _interstitialLoadAttempts = 0;
-  //       },
-  //       onAdFailedToLoad: (LoadAdError err) {
-  //         print('Failed to load an interstitial ad: ${err.message}');
-  //         _interstitialLoadAttempts += 1;
-  //         _interstitialAd = null;
-  //         if (_interstitialLoadAttempts >= maxFailedLoadAttempts) {
-  //           _loadInterstitialAd();
-  //         }
-  //       },
-  //     ),
-  //   );
-  // }
+  void _loadInterstitialAd() {
+    InterstitialAd.load(
+      adUnitId: AdHelper.interstitialAdUnitId,
+      request: AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (InterstitialAd ad) {
+          _interstitialAd = ad;
+          _interstitialLoadAttempts = 0;
+        },
+        onAdFailedToLoad: (LoadAdError err) {
+          print('Failed to load an interstitial ad: ${err.message}');
+          _interstitialLoadAttempts += 1;
+          _interstitialAd = null;
+          if (_interstitialLoadAttempts >= maxFailedLoadAttempts) {
+            _loadInterstitialAd();
+          }
+        },
+      ),
+    );
+  }
 
-  // void _showInterstitialAd() {
-  //   if (_interstitialAd != null) {
-  //     _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
-  //       onAdDismissedFullScreenContent: (InterstitialAd ad) {
-  //         ad.dispose();
-  //         _loadInterstitialAd();
-  //       },
-  //       onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
-  //         ad.dispose();
-  //         _loadInterstitialAd();
-  //       },
-  //     );
-  //     _interstitialAd!.show();
-  //   }
-  // }
+  void _showInterstitialAd() {
+    if (_interstitialAd != null && _count <= _configCount) {
+      _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+        onAdDismissedFullScreenContent: (InterstitialAd ad) {
+          ad.dispose();
+          _loadInterstitialAd();
+        },
+        onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
+          ad.dispose();
+          _loadInterstitialAd();
+        },
+      );
+      _interstitialAd!.show();
+      _updateCount();
+      setState(() {
+        _count = _getCount();
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final IdiomRepository repository = IdiomRepository();
 
     return Container(
-      decoration: const BoxDecoration(
-          // gradient: LinearGradient(
-          //   begin: Alignment.topLeft,
-          //   end: Alignment.bottomRight,
-          //   colors: [kPrimaryColor, kSecondaryColor],
-          // ),
-          color: Colors.white),
+      decoration: const BoxDecoration(color: Colors.white),
       child: SafeArea(
           child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -138,7 +164,7 @@ class _LearnScreenState extends State<LearnScreen> {
                     itemBuilder: (context, index) {
                       return ListTile(
                         onTap: () {
-                          // _showInterstitialAd();
+                          _showInterstitialAd();
                           Navigator.pushNamed(context, '/learn_detail',
                               arguments: idioms[index]);
                         },
@@ -163,5 +189,33 @@ class _LearnScreenState extends State<LearnScreen> {
 
   getPhrases(List<Idiom> idioms) {
     return idioms.map((e) => e.phrase).toList();
+  }
+
+  _getCount() {
+    return box.getAt(0)?.count ?? 0;
+  }
+
+  _updateCount() {
+    DateTime today = _getCurrentDate();
+    int boxCount = box.getAt(0)?.count ?? 0;
+    DateTime boxDate = box.getAt(0)?.date ?? today;
+
+    InterstitialClickCount adsClickCount;
+    if (boxDate == today) {
+      adsClickCount = InterstitialClickCount()
+        ..count = ++boxCount
+        ..date = boxDate;
+    } else {
+      adsClickCount = InterstitialClickCount()
+        ..count = 0
+        ..date = today;
+    }
+    box.putAt(0, adsClickCount);
+  }
+
+  _getCurrentDate() {
+    DateTime now = DateTime.now();
+    DateTime today = DateTime(now.year, now.month, now.day);
+    return today;
   }
 }
