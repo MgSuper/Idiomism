@@ -124,7 +124,7 @@ class _LearnScreenState extends State<LearnScreen> {
             if (state is IdiomLoading) {
               return const Center(
                 child: SpinKitDancingSquare(
-                  color: Colors.red,
+                  color: kPrimaryColor,
                   size: 50.0,
                 ),
               );

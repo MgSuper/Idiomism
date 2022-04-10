@@ -120,105 +120,104 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: const BoxDecoration(color: Colors.white),
-        child: Scaffold(
+      decoration: const BoxDecoration(color: Colors.white),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
           backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            title: const Text(
-              'Home',
-              style:
-                  TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold),
-            ),
+          elevation: 0,
+          title: const Text(
+            'Home',
+            style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold),
           ),
-          body: SafeArea(
-            child: Column(children: [
-              Stack(
-                children: [
-                  CarouselSlider.builder(
-                    itemCount: carousalCards.length,
-                    options: CarouselOptions(
-                      aspectRatio: 1.2,
-                      height: 300,
-                      autoPlay: true,
-                      autoPlayAnimationDuration: Duration(seconds: 2),
-                      enlargeCenterPage: true,
-                      enlargeStrategy: CenterPageEnlargeStrategy.height,
-                      enableInfiniteScroll: false,
-                      pauseAutoPlayInFiniteScroll: true,
-                    ),
-                    itemBuilder: (context, index, realIndex) {
-                      String img = carousalCards[index];
-                      String text = carousalTexts[index];
-                      return buildCarousalImage(img, text, index);
+        ),
+        body: SafeArea(
+          child: Column(children: [
+            Stack(
+              children: [
+                CarouselSlider.builder(
+                  itemCount: carousalCards.length,
+                  options: CarouselOptions(
+                    aspectRatio: 1.2,
+                    height: 300,
+                    autoPlay: true,
+                    autoPlayAnimationDuration: Duration(seconds: 2),
+                    enlargeCenterPage: true,
+                    enlargeStrategy: CenterPageEnlargeStrategy.height,
+                    enableInfiniteScroll: false,
+                    pauseAutoPlayInFiniteScroll: true,
+                  ),
+                  itemBuilder: (context, index, realIndex) {
+                    String img = carousalCards[index];
+                    String text = carousalTexts[index];
+                    return buildCarousalImage(img, text, index);
+                  },
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 2.h,
+            ),
+            FadeAnimation(
+              delay: 1.5,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  HomeCardWidget(
+                    imageURL: 'assets/icons/learn.png',
+                    text: 'Learn',
+                    color: kPrimaryColor,
+                    onTap: () {
+                      Navigator.pushNamed(context, '/learn');
+                    },
+                  ),
+                  SizedBox(
+                    width: 5.0.w,
+                  ),
+                  HomeCardWidget(
+                    imageURL: 'assets/icons/flash_cards.png',
+                    text: 'Train',
+                    color: kSecondaryColor,
+                    onTap: () {
+                      Navigator.pushNamed(context, '/train');
                     },
                   ),
                 ],
               ),
-              SizedBox(
-                height: 2.h,
-              ),
-              FadeAnimation(
-                delay: 1.5,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    HomeCardWidget(
-                      imageURL: 'assets/icons/learn.png',
-                      text: 'Learn',
-                      color: kPrimaryColor,
-                      onTap: () {
-                        Navigator.pushNamed(context, '/learn');
-                      },
-                    ),
-                    SizedBox(
-                      width: 5.0.w,
-                    ),
-                    HomeCardWidget(
-                      imageURL: 'assets/icons/flash_cards.png',
-                      text: 'Train',
-                      color: kSecondaryColor,
-                      onTap: () {
-                        Navigator.pushNamed(context, '/train');
-                      },
-                    ),
-                  ],
-                ),
-              )
-            ]),
-          ),
-          floatingActionButton:
-              BlocBuilder<RemoteConfigBloc, RemoteConfigState>(
-            builder: (context, state) {
-              if (state is RemoteConfigLoaded && _isRewardedAdReady) {
-                if (_count <= state.count) {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 40),
-                    child: FloatingActionButton.extended(
-                      elevation: 10,
-                      onPressed: () {
-                        _rewardedAd.show(onUserEarnedReward: (ad, reward) {
-                          _updateCount();
-                          setState(() {
-                            _count = _getCount();
-                          });
-                          _goToQuickLearn();
+            )
+          ]),
+        ),
+        floatingActionButton: BlocBuilder<RemoteConfigBloc, RemoteConfigState>(
+          builder: (context, state) {
+            if (state is RemoteConfigLoaded && _isRewardedAdReady) {
+              if (_count <= state.count) {
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 40),
+                  child: FloatingActionButton.extended(
+                    elevation: 10,
+                    onPressed: () {
+                      _rewardedAd.show(onUserEarnedReward: (ad, reward) {
+                        _updateCount();
+                        setState(() {
+                          _count = _getCount();
                         });
-                      },
-                      label: const Text(
-                        'Quick Learn',
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
-                      ),
+                        _goToQuickLearn();
+                      });
+                    },
+                    label: const Text(
+                      'Quick Learn',
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
                     ),
-                  );
-                }
+                  ),
+                );
               }
-              return Container();
-            },
-          ),
-        ));
+            }
+            return Container();
+          },
+        ),
+      ),
+    );
   }
 
   _getCount() {
