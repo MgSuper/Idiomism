@@ -21,7 +21,7 @@ Future<void> main() async {
       RequestConfiguration(
           tagForChildDirectedTreatment:
               TagForChildDirectedTreatment.unspecified,
-          testDeviceIds: <String>["F8530ED7C8BED2E8D745436D152CB7ED"]),
+          testDeviceIds: <String>['F8530ED7C8BED2E8D745436D152CB7ED']),
     );
   });
   await Firebase.initializeApp();

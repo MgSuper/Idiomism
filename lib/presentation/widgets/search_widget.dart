@@ -18,7 +18,6 @@ class TypeAhead extends StatelessWidget {
     return TypeAheadField(
       getImmediateSuggestions: true,
       textFieldConfiguration: const TextFieldConfiguration(
-       
         // autofocus: true,
         decoration: InputDecoration(
           focusedBorder: OutlineInputBorder(
@@ -32,7 +31,7 @@ class TypeAhead extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(20)),
             borderSide: BorderSide(color: kSecondaryColor, width: 1.0),
           ),
-          hintText: "Search",
+          hintText: 'Search',
           hintStyle: TextStyle(fontSize: 15, color: kSecondaryColor),
         ),
       ),

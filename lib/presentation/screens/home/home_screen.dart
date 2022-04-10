@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,7 +11,6 @@ import 'package:theidioms/data/model/idiom.dart';
 import 'package:theidioms/logic/blocs/idiom/idiom_bloc.dart';
 import 'package:theidioms/logic/blocs/remote_config/remote_config_bloc.dart';
 import 'package:theidioms/presentation/animations/animations.dart';
-import 'package:theidioms/presentation/widgets/card_stack_widget.dart';
 import 'package:theidioms/presentation/widgets/card_widget.dart';
 import 'package:theidioms/util/ad_helper.dart';
 import 'package:theidioms/util/constants.dart';
@@ -147,6 +145,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       autoPlayAnimationDuration: Duration(seconds: 2),
                       enlargeCenterPage: true,
                       enlargeStrategy: CenterPageEnlargeStrategy.height,
+                      enableInfiniteScroll: false,
+                      pauseAutoPlayInFiniteScroll: true,
                     ),
                     itemBuilder: (context, index, realIndex) {
                       String img = carousalCards[index];
@@ -157,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
               SizedBox(
-                height: 5.h,
+                height: 2.h,
               ),
               FadeAnimation(
                 delay: 1.5,
@@ -177,7 +177,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     HomeCardWidget(
                       imageURL: 'assets/icons/flash_cards.png',
-                      text: 'Flash cards',
+                      text: 'Train',
                       color: kSecondaryColor,
                       onTap: () {
                         Navigator.pushNamed(context, '/train');

@@ -28,13 +28,9 @@ class _TrainDetailScreenState extends State<TrainDetailScreen> {
             backgroundColor: Colors.transparent,
             elevation: 0,
             iconTheme: const IconThemeData(color: kPrimaryColor),
-            actions: [
-              TextButton(onPressed: () {}, child: Text('Back')),
-              TextButton(onPressed: () {}, child: Text('Next')),
-            ],
           ),
           body: Padding(
-            padding: EdgeInsets.only(top: 5.0.h),
+            padding: EdgeInsets.only(bottom: 4.0.h),
             child: FlipCard(
               key: cardKey,
               flipOnTouch: false,

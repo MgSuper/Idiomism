@@ -36,7 +36,7 @@ class _LearnDetailScreenState extends State<LearnDetailScreen> {
   _speak(text) async {
     await flutterTts.setSpeechRate(0.0);
     await flutterTts.setLanguage('en-US');
-    await flutterTts.setVoice({"name": "en-us-x-tpf-local", "locale": "en-US"});
+    await flutterTts.setVoice({'name': 'en-us-x-tpf-local', 'locale': 'en-US'});
     await flutterTts.speak(text);
   }
 

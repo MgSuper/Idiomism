@@ -43,9 +43,15 @@ class CardWidget extends StatelessWidget {
                       Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Icon(Icons.touch_app_outlined, color: Colors.white,),
+                            const Icon(
+                              Icons.touch_app_outlined,
+                              color: Colors.white,
+                            ),
                             SizedBox(width: 3.w),
-                            const Text('Tap to see the definition', style: TextStyle(color: Colors.white),),
+                            const Text(
+                              'Tap to see the definition',
+                              style: TextStyle(color: Colors.white),
+                            ),
                           ])
                     ])
               : Column(
@@ -85,7 +91,7 @@ class HomeCardWidget extends StatelessWidget {
     return InkWell(
         onTap: onTap,
         child: Container(
-          width: 40.w,
+          width: 35.5.w,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             color: color!,

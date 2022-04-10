@@ -29,7 +29,7 @@ class _TrainScreenState extends State<TrainScreen> {
   _speak(text) async {
     await flutterTts.setSpeechRate(0.0);
     await flutterTts.setLanguage('en-US');
-    await flutterTts.setVoice({"name": "en-us-x-tpf-local", "locale": "en-US"});
+    await flutterTts.setVoice({'name': 'en-us-x-tpf-local', 'locale': 'en-US'});
     await flutterTts.speak(text);
   }
 
@@ -66,61 +66,58 @@ class _TrainScreenState extends State<TrainScreen> {
                         margin: const EdgeInsets.all(2),
                         padding: const EdgeInsets.all(10),
                         child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              InkWell(
-                                  onTap: () => {
-                                        Navigator.pushNamed(
-                                            context, TrainDetailScreen.id,
-                                            arguments: item)
-                                      },
-                                  child: Column(
-                                    children: [
-                                      SizedBox(
-                                        height: 4.h,
-                                      ),
-                                      Text(
-                                        item.phrase,
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 13.0.sp,
-                                            fontWeight: FontWeight.bold),
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                      SizedBox(
-                                        height: 7.h,
-                                      ),
-                                    ],
-                                  )),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            InkWell(
+                              onTap: () => {
+                                Navigator.pushNamed(
+                                    context, TrainDetailScreen.id,
+                                    arguments: item)
+                              },
+                              child: Column(
                                 children: [
-                                  IconButton(
-                                    icon: const Icon(
-                                      Icons.keyboard_voice_outlined,
-                                      color: Colors.white,
-                                    ),
-                                    onPressed: () {
-                                      _speak(item.phrase);
-                                    },
+                                  SizedBox(
+                                    height: 2.0.h,
                                   ),
-                                  IconButton(
-                                    icon: const Icon(
-                                      Icons.delete_outlined,
-                                      color: Colors.white,
-                                    ),
-                                    onPressed: () {
-                                      _deleteFlashCard(item);
-                                    },
-                                  )
+                                  Text(
+                                    item.phrase,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 12.0.sp,
+                                        fontWeight: FontWeight.bold),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.center,
+                                  ),
                                 ],
                               ),
-                              SizedBox(
-                                height: 1.h,
-                              )
-                            ]),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                IconButton(
+                                  icon: const Icon(
+                                    Icons.keyboard_voice_outlined,
+                                    color: Colors.white,
+                                  ),
+                                  onPressed: () {
+                                    _speak(item.phrase);
+                                  },
+                                ),
+                                IconButton(
+                                  icon: const Icon(
+                                    Icons.delete_outlined,
+                                    color: Colors.white,
+                                  ),
+                                  onPressed: () {
+                                    _deleteFlashCard(item);
+                                  },
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     )
                     .toList(),
@@ -129,7 +126,7 @@ class _TrainScreenState extends State<TrainScreen> {
                 transform: Matrix4.translationValues(0, -50.0, 0),
                 child: Center(
                     child: Text(
-                  'Please add a flash card!',
+                  'Please learn some idioms to train !',
                   style: detailSubtitle,
                   textAlign: TextAlign.center,
                 ))),
