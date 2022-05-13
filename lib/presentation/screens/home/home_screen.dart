@@ -283,7 +283,7 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 '$text',
-                style: TextStyle(color: Colors.white, fontSize: 14.0.sp),
+                style: TextStyle(color: Colors.white, fontSize: 13.0.sp),
                 textAlign: TextAlign.center,
               ),
             ),

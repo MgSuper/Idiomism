@@ -17,17 +17,17 @@ import 'package:sizer/sizer.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   MobileAds.instance.initialize();
-  await MobileAds.instance.initialize().then((InitializationStatus status) {
-    MobileAds.instance.updateRequestConfiguration(
-      RequestConfiguration(
-          tagForChildDirectedTreatment:
-              TagForChildDirectedTreatment.unspecified,
-          testDeviceIds: <String>[
-            'F8530ED7C8BED2E8D745436D152CB7ED',
-            'F24CA548F6A78A6AC67B649EC3CAEC2A'
-          ]),
-    );
-  });
+  // await MobileAds.instance.initialize().then((InitializationStatus status) {
+  //   MobileAds.instance.updateRequestConfiguration(
+  //     RequestConfiguration(
+  //         tagForChildDirectedTreatment:
+  //             TagForChildDirectedTreatment.unspecified,
+  //         testDeviceIds: <String>[
+  //           'F8530ED7C8BED2E8D745436D152CB7ED',
+  //           'F24CA548F6A78A6AC67B649EC3CAEC2A'
+  //         ]),
+  //   );
+  // });
   await Firebase.initializeApp();
   await Hive.initFlutter();
   Hive.registerAdapter(AdsClickCountAdapter());
