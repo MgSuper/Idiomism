@@ -1,6 +1,4 @@
 import 'dart:math';
-
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -108,7 +106,6 @@ class _HomeScreenState extends State<HomeScreen> {
           });
         },
         onAdFailedToLoad: (err) {
-          print('Failed to load a rewarded ad: ${err.message}');
           setState(() {
             _isRewardedAdReady = false;
           });
@@ -123,37 +120,52 @@ class _HomeScreenState extends State<HomeScreen> {
       decoration: const BoxDecoration(color: Colors.white),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          title: const Text(
-            'Home',
-            style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold),
-          ),
-        ),
         body: SafeArea(
-          child: Column(children: [
-            Stack(
-              children: [
-                CarouselSlider.builder(
-                  itemCount: carousalCards.length,
-                  options: CarouselOptions(
-                    aspectRatio: 1.2,
-                    height: 300,
-                    autoPlay: true,
-                    autoPlayAnimationDuration: Duration(seconds: 2),
-                    enlargeCenterPage: true,
-                    enlargeStrategy: CenterPageEnlargeStrategy.height,
-                    enableInfiniteScroll: false,
-                    pauseAutoPlayInFiniteScroll: true,
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            const Padding(
+                padding: EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+                child: Text(
+                  'Pumped \nYourself Up!',
+                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                )),
+            SizedBox(
+              height: 2.h,
+            ),
+            FadeAnimation(
+              delay: 1.5,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  HomeCardWidget(
+                      imageURL: 'assets/icons/search.png',
+                      text: 'Browse Words',
+                      color: kYellowColor,
+                      onTap: () {
+                        Navigator.pushNamed(context, '/learn');
+                      },
+                      borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          bottomLeft: Radius.circular(30),
+                          bottomRight: Radius.circular(30)),
+                      width: 40.w),
+                  SizedBox(
+                    width: 5.0.w,
                   ),
-                  itemBuilder: (context, index, realIndex) {
-                    String img = carousalCards[index];
-                    String text = carousalTexts[index];
-                    return buildCarousalImage(img, text, index);
-                  },
-                ),
-              ],
+                  HomeCardWidget(
+                      imageURL: 'assets/icons/flash_cards.png',
+                      text: 'Flash Cards',
+                      color: kPinkColor,
+                      onTap: () {
+                        Navigator.pushNamed(context, '/train');
+                      },
+                      borderRadius: const BorderRadius.only(
+                          topRight: Radius.circular(30),
+                          bottomLeft: Radius.circular(30),
+                          bottomRight: Radius.circular(30)),
+                      width: 40.w),
+                ],
+              ),
             ),
             SizedBox(
               height: 2.h,
@@ -164,24 +176,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   HomeCardWidget(
-                    imageURL: 'assets/icons/learn.png',
-                    text: 'Learn',
-                    color: kPrimaryColor,
-                    onTap: () {
-                      Navigator.pushNamed(context, '/learn');
-                    },
-                  ),
-                  SizedBox(
-                    width: 5.0.w,
-                  ),
-                  HomeCardWidget(
-                    imageURL: 'assets/icons/flash_cards.png',
-                    text: 'Train',
-                    color: kSecondaryColor,
-                    onTap: () {
-                      Navigator.pushNamed(context, '/train');
-                    },
-                  ),
+                      imageURL: 'assets/icons/quiz.png',
+                      text: 'Quiz',
+                      color: kGreenColor,
+                      onTap: () {
+                         Navigator.pushNamed(context, '/quiz');
+                      },
+                      borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          bottomLeft: Radius.circular(30),
+                          bottomRight: Radius.circular(30)),
+                      width: 85.w),
                 ],
               ),
             )
@@ -267,7 +272,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget buildCarousalImage(String img, String text, int index) => Container(
-        margin: EdgeInsets.all(8.0),
+        margin: const EdgeInsets.all(8.0),
         alignment: Alignment.bottomCenter,
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -278,11 +283,11 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
-            color: Colors.black45,
+            // color: Colors.black45,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                '$text',
+                text,
                 style: TextStyle(color: Colors.white, fontSize: 13.0.sp),
                 textAlign: TextAlign.center,
               ),

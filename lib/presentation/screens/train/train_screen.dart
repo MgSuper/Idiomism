@@ -42,7 +42,7 @@ class _TrainScreenState extends State<TrainScreen> {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
-          iconTheme: const IconThemeData(color: kPrimaryColor),
+          iconTheme: const IconThemeData(color: Colors.black),
         ),
         body: (flashCards!.isNotEmpty)
             ? GridView.count(
@@ -55,13 +55,13 @@ class _TrainScreenState extends State<TrainScreen> {
                       (item) => Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: kSecondaryColor,
+                          color: kPinkColor,
                         ),
                         margin: const EdgeInsets.all(2),
                         padding: const EdgeInsets.all(10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             InkWell(
                               onTap: () => {
@@ -70,6 +70,7 @@ class _TrainScreenState extends State<TrainScreen> {
                                     arguments: item)
                               },
                               child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   SizedBox(
                                     height: 2.0.h,
@@ -77,8 +78,8 @@ class _TrainScreenState extends State<TrainScreen> {
                                   Text(
                                     item.phrase,
                                     style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 12.0.sp,
+                                        // color: Colors.white,
+                                        fontSize: 13.sp,
                                         fontWeight: FontWeight.bold),
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
@@ -93,7 +94,7 @@ class _TrainScreenState extends State<TrainScreen> {
                                 IconButton(
                                   icon: const Icon(
                                     Icons.keyboard_voice_outlined,
-                                    color: Colors.white,
+                                    // color: Colors.white,
                                   ),
                                   onPressed: () {
                                     _speak(item.phrase);
@@ -102,7 +103,7 @@ class _TrainScreenState extends State<TrainScreen> {
                                 IconButton(
                                   icon: const Icon(
                                     Icons.delete_outlined,
-                                    color: Colors.white,
+                                    // color: Colors.white,
                                   ),
                                   onPressed: () {
                                     _deleteFlashCard(item);

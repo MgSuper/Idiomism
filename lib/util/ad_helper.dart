@@ -3,8 +3,8 @@ import 'dart:io';
 class AdHelper {
   static String get bannerAdUnitId {
     if (Platform.isAndroid) {
-      return 'ca-app-pub-5174798753408425/2814184227'; //Prod
-      // return 'ca-app-pub-3940256099942544/6300978111';
+      // return 'ca-app-pub-5174798753408425/2814184227'; // Prod
+      return 'ca-app-pub-3940256099942544/6300978111'; // Dev
     } else if (Platform.isIOS) {
       return 'ca-app-pub-3940256099942544/2934735716';
     } else {
@@ -14,8 +14,8 @@ class AdHelper {
 
   static String get interstitialAdUnitId {
     if (Platform.isAndroid) {
-      return 'ca-app-pub-5174798753408425/6945000926'; //Prod
-      // return 'ca-app-pub-3940256099942544/1033173712';
+      // return 'ca-app-pub-5174798753408425/6945000926'; //Prod
+      return 'ca-app-pub-3940256099942544/1033173712'; //Dev
     } else if (Platform.isIOS) {
       return 'ca-app-pub-3940256099942544/4411468910';
     } else {
@@ -25,8 +25,8 @@ class AdHelper {
 
   static String get rewardedAdUnitId {
     if (Platform.isAndroid) {
-      return 'ca-app-pub-5174798753408425/5991560646'; // Prod
-      // return 'ca-app-pub-3940256099942544/5224354917';
+      // return 'ca-app-pub-5174798753408425/5991560646'; // Prod
+      return 'ca-app-pub-3940256099942544/5224354917'; // Dev
     } else if (Platform.isIOS) {
       return 'ca-app-pub-3940256099942544/4411468910';
     } else {

@@ -81,42 +81,48 @@ class HomeCardWidget extends StatelessWidget {
   final String? text;
   final Function()? onTap;
   final Color? color;
+  final BorderRadius? borderRadius;
+  final double? width;
 
   const HomeCardWidget(
-      {Key? key, this.imageURL, this.text, this.onTap, this.color})
+      {Key? key, this.imageURL, this.text, this.onTap, this.color, this.borderRadius, this.width})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      child: Container(
-        width: 35.5.w,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: color!,
-        ),
-        child: Column(
-          children: [
-            Image.asset(
-              imageURL!,
-              width: 12.w,
-              height: 12.h,
+      child: Material(
+          elevation: 7.0,
+          borderRadius: borderRadius,
+          child: Container(
+            width: width,
+            height: 45.w,
+            decoration: BoxDecoration(
+              borderRadius: borderRadius,
+              color: color!,
             ),
-            Text(
-              text!,
-              textAlign: TextAlign.start,
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 12.sp,
-                  color: Colors.white),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  imageURL!,
+                  width: 12.w,
+                  height: 12.h,
+                ),
+                Text(
+                  text!,
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13.sp),
+                ),
+                SizedBox(
+                  height: 3.h,
+                )
+              ],
             ),
-            SizedBox(
-              height: 3.h,
-            )
-          ],
-        ),
-      ),
+          )),
     );
   }
 }

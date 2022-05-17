@@ -114,17 +114,16 @@ class _LearnScreenState extends State<LearnScreen> {
             elevation: 0,
             title: const Text(
               'Learn',
-              style:
-                  TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold),
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
             centerTitle: false,
-            iconTheme: const IconThemeData(color: kPrimaryColor),
+            iconTheme: const IconThemeData(color: Colors.black),
           ),
           body: BlocBuilder<IdiomBloc, IdiomState>(builder: (context, state) {
             if (state is IdiomLoading) {
               return const Center(
                 child: SpinKitDancingSquare(
-                  color: kPrimaryColor,
+                  color: Colors.black,
                   size: 50.0,
                 ),
               );
@@ -158,28 +157,33 @@ class _LearnScreenState extends State<LearnScreen> {
                     ),
                     Expanded(
                       child: SingleChildScrollView(
-                        child: ListView.separated(
+                        child: ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
-                          separatorBuilder: (BuildContext context, int index) =>
-                              const Divider(
-                            color: Colors.grey,
-                          ),
+                          // separatorBuilder: (BuildContext context, int index) =>
+                          //     const Divider(
+                          //   color: Colors.grey,
+                          // ),
                           itemCount: idioms.length,
                           itemBuilder: (context, index) {
                             return ListTile(
-                              onTap: () {
-                                _showInterstitialAd();
-                                Navigator.pushNamed(context, '/learn_detail',
-                                    arguments: idioms[index]);
-                              },
-                              title: Text(
-                                idioms[index].phrase,
-                                style: const TextStyle(
-                                    color: kPrimaryColor,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            );
+                                onTap: () {
+                                  _showInterstitialAd();
+                                  Navigator.pushNamed(context, '/learn_detail',
+                                      arguments: idioms[index]);
+                                },
+                                title: Material(
+                                    elevation: 3.0,
+                                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                                      child: Text(
+                                        idioms[index].phrase,
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold),
+                                      ))
+                                    ));
                           },
                         ),
                       ),

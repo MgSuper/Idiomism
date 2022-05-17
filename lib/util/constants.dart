@@ -6,6 +6,9 @@ const maxFailedLoadAttempts = 3;
 const kPrimaryColor = Color(0xFF42275a);
 const kSecondaryColor = Color(0xFF734b6d);
 const kTertiaryColor = Color(0xFF263238);
+const kGreenColor = Color(0xFF66CDAA);
+const kPinkColor = Color(0xFFED5D66);
+const kYellowColor = Color(0xFFFDB954);
 
 const snackBar = SnackBar(
   content: Text('Yay, got a reward !'),

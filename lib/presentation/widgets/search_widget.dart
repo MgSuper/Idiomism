@@ -21,7 +21,7 @@ class TypeAhead extends StatelessWidget {
         // autofocus: true,
         decoration: InputDecoration(
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: kPrimaryColor),
+            borderSide: BorderSide(color: Colors.black),
             borderRadius: BorderRadius.all(Radius.circular(20)),
           ),
           border: OutlineInputBorder(
@@ -29,10 +29,10 @@ class TypeAhead extends StatelessWidget {
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(20)),
-            borderSide: BorderSide(color: kSecondaryColor, width: 1.0),
+            borderSide: BorderSide(color: Colors.black, width: 1.0),
           ),
           hintText: 'Search',
-          hintStyle: TextStyle(fontSize: 15, color: kSecondaryColor),
+          hintStyle: TextStyle(fontSize: 15, color: Colors.grey),
         ),
       ),
       suggestionsCallback: suggestionsCallback,
