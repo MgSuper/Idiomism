@@ -9,6 +9,7 @@ import 'package:theidioms/data/model/idiom.dart';
 import 'package:theidioms/logic/blocs/idiom/idiom_bloc.dart';
 import 'package:theidioms/logic/blocs/remote_config/remote_config_bloc.dart';
 import 'package:theidioms/presentation/animations/animations.dart';
+import 'package:theidioms/presentation/screens/quiz/quiz_screen.dart';
 import 'package:theidioms/presentation/widgets/card_widget.dart';
 import 'package:theidioms/util/ad_helper.dart';
 import 'package:theidioms/util/constants.dart';
@@ -180,7 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       text: 'Quiz',
                       color: kGreenColor,
                       onTap: () {
-                         Navigator.pushNamed(context, '/quiz');
+                         Navigator.pushNamed(context, QuizScreen.id);
                       },
                       borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(30),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:theidioms/data/model/flash_card.dart';
 import 'package:theidioms/data/model/idiom.dart';
 import 'package:theidioms/presentation/screens/quiz/quiz_screen.dart';
+import 'package:theidioms/presentation/screens/quiz/result_screen.dart';
 import 'package:theidioms/presentation/screens/screens.dart';
 import 'package:theidioms/presentation/screens/train/train_screen.dart';
 import 'package:theidioms/presentation/screens/train_detail/train_detail_screen.dart';
@@ -24,13 +25,15 @@ class AppRouter {
         );
       case '/train':
         return MaterialPageRoute(builder: (_) => const TrainScreen());
-      case '/quiz':
+      case QuizScreen.id:
         return MaterialPageRoute(builder: (_) => const QuizScreen());
       case TrainDetailScreen.id:
         return MaterialPageRoute(
             builder: (_) => TrainDetailScreen(
                   passedData: routeSettings.arguments as FlashCard,
                 ));
+      case ResultScreen.id:
+        return MaterialPageRoute(builder: (_)=> ResultScreen(score: routeSettings.arguments as int));
       default:
         return MaterialPageRoute(
           builder: (_) => ScreenNotFound(),
