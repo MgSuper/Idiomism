@@ -63,7 +63,7 @@ class _LearnScreenState extends State<LearnScreen> {
   void _loadInterstitialAd() {
     InterstitialAd.load(
       adUnitId: AdHelper.interstitialAdUnitId,
-      request: AdRequest(),
+      request: const AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (InterstitialAd ad) {
           _interstitialAd = ad;
